@@ -1,0 +1,12 @@
+dueDay = input('Please enter the day the assignment is due:')
+dueMonth = input('Please enter the month the assignment is due:')
+dueYear = input('Please enter the year the assignment is due:')
+dueMinute = input('Please enter the minute the assignment is due:')
+dueHour = input('Please enter the hour the assignment is due:')
+dueDayStr = str(dueDay)
+dueMonthStr = str(dueMonth)
+dueYearStr = str(dueYear)
+dueMinuteStr = str(dueMinute)
+dueHourStr = str(dueHour)
+print('Module 1 Assignment, Hello World! is due on ' + dueMonthStr + '/' + dueDayStr \
+      + '/' + dueYearStr + ' at ' + dueHourStr + ':' + dueMinuteStr + ' EST.')

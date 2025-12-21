@@ -1,0 +1,69 @@
+2025-04-09 08:10:06,744 - ERROR - No such comm target registered: jupyter.widget.control
+2025-04-09 08:10:06,745 - WARNING - No such comm: 33162f93-8ce7-46ec-977f-e81282df7ca6
+2025-04-09 09:16:38,270 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-09 09:16:38,270 - INFO - Completed loading. Total documents: 0
+2025-04-09 09:24:03,719 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-09 09:24:03,719 - INFO - Completed loading. Total documents: 0
+2025-04-11 08:55:35,135 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 08:55:35,135 - INFO - Completed loading. Total documents: 0
+2025-04-11 08:56:12,931 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 08:56:12,931 - INFO - Completed loading. Total documents: 0
+2025-04-11 08:58:57,210 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 08:58:57,211 - INFO - Completed loading. Total documents: 0
+2025-04-11 09:00:14,875 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 09:00:14,875 - INFO - Completed loading. Total documents: 0
+2025-04-11 09:04:32,937 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 09:04:32,937 - INFO - Completed loading. Total documents: 0
+2025-04-11 09:05:42,853 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 09:05:42,853 - INFO - Completed loading. Total documents: 0
+2025-04-11 09:07:04,633 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 09:07:04,633 - INFO - Completed loading. Total documents: 0
+2025-04-11 09:19:30,404 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 09:19:30,404 - INFO - Completed loading. Total documents: 0
+2025-04-11 09:25:22,519 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 09:25:22,519 - INFO - Completed loading. Total documents: 0
+2025-04-11 09:27:28,516 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 09:27:28,516 - INFO - Completed loading. Total documents: 0
+2025-04-11 13:53:19,790 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 13:53:19,790 - INFO - Completed loading. Total documents: 0
+2025-04-11 14:01:08,247 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 14:01:08,248 - INFO - Completed loading. Total documents: 0
+2025-04-11 14:02:10,623 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 14:02:10,623 - INFO - Completed loading. Total documents: 0
+2025-04-11 14:02:59,070 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 14:02:59,070 - INFO - Completed loading. Total documents: 0
+2025-04-11 14:10:11,968 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 14:10:11,968 - INFO - Completed loading. Total documents: 0
+2025-04-11 14:14:33,736 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 14:14:33,736 - INFO - Completed loading. Total documents: 0
+2025-04-11 14:18:21,412 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 14:18:21,412 - INFO - Completed loading. Total documents: 0
+2025-04-11 14:18:55,396 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 14:18:55,396 - INFO - Completed loading. Total documents: 0
+2025-04-11 14:21:48,239 - INFO - Found 0 files matching pattern storage/*.txt.clean
+2025-04-11 14:21:48,239 - INFO - Completed loading. Total documents: 0
+2025-04-11 14:25:20,264 - INFO - [CORPUS] Found 0 files matching pattern: storage/*.txt.clean
+2025-04-11 14:27:09,870 - INFO - [CORPUS] Found 0 files matching pattern: storage/*.txt
+2025-04-11 14:29:48,977 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-11 17:58:02,163 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-11 17:59:20,497 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-11 18:41:41,237 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-11 20:01:22,769 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 07:40:28,992 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 07:43:49,808 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 07:51:07,500 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 07:54:35,572 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 07:59:01,762 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 08:00:57,223 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 10:00:44,145 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 10:15:10,449 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 10:17:46,869 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 10:38:41,927 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-04-12 10:38:41,930 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-04-12 10:39:36,425 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-04-12 10:39:36,428 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-04-12 10:39:52,895 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 13:10:16,244 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 13:11:21,975 - INFO - [CORPUS] Found 150 files matching pattern: C:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\textwave\notebooks\..\storage\*.txt.clean
+2025-04-12 13:26:19,825 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-04-12 13:26:19,829 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.

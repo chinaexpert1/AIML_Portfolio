@@ -1,0 +1,7 @@
+Here is the output to my RawDataHandler script:
+
+c:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\taylor-andrew\securebank\modules\data\raw_data_handler.py:71: FutureWarning: DataFrame.fillna with 'method' is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
+  merged_data.fillna(method='ffill', inplace=True)
+c:\Users\Putna\OneDrive - Johns Hopkins\Documents\Johns Hopkins\Creating AI Enabled Systems\SP25\taylor-andrew\securebank\modules\data\raw_data_handler.py:72: FutureWarning: DataFrame.fillna with 'method' is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
+  merged_data.fillna(method='bfill', inplace=True)
+{'Number of records': 1647542, 'Number of columns': 30, 'Feature names': ['trans_num', 'index_x', 'cc_num', 'unix_time', 'merchant', 'category', 'amt', 'merch_lat', 'merch_long', 'fraud_label', 'index_y', 'first', 'last', 'sex', 'street', 'city', 'state', 'zip', 'lat', 'long', 'city_pop', 'job', 'dob', 'day_of_week', 'hour', 'minute', 'second', 'day_date', 'month_date', 'year_date'], 'Number missing values': 0, 'Column data types': ['object', 'int64', 'int64', 'float64', 'object', 'object', 'float64', 'float64', 'float64', 'float64', 'int64', 'object', 'object', 'object', 'object', 'object', 'object', 'float64', 'float64', 'float64', 'float64', 'object', 'object', 'object', 'int32', 'int32', 'int32', 'int32', 'object', 'int32']}

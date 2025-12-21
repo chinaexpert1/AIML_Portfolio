@@ -1,0 +1,450 @@
+Algorithm: natural_merge_sort_iterative
+File: asc10K.dat
+Comparisons: 0
+Exchanges: 9999
+
+Algorithm: quicksort100_iterative
+File: asc10K.dat
+Comparisons: 49989950
+Exchanges: 19797
+
+Algorithm: quicksort50_iterative
+File: asc10K.dat
+Comparisons: 49993725
+Exchanges: 19897
+
+Algorithm: random_pivot_quicksort_iterative
+File: asc10K.dat
+Comparisons: 150765
+Exchanges: 88658
+
+Algorithm: medianQuicksort_iterative
+File: asc10K.dat
+Comparisons: 113631
+Exchanges: 7713
+
+Algorithm: quicksort_iterative
+File: asc10K.dat
+Comparisons: 49994999
+Exchanges: 9998
+
+Algorithm: natural_merge_sort_iterative
+File: asc1K.dat
+Comparisons: 0
+Exchanges: 999
+
+Algorithm: quicksort100_iterative
+File: asc1K.dat
+Comparisons: 494450
+Exchanges: 1797
+
+Algorithm: quicksort50_iterative
+File: asc1K.dat
+Comparisons: 498225
+Exchanges: 1897
+
+Algorithm: random_pivot_quicksort_iterative
+File: asc1K.dat
+Comparisons: 11170
+Exchanges: 7776
+
+Algorithm: medianQuicksort_iterative
+File: asc1K.dat
+Comparisons: 7987
+Exchanges: 533
+
+Algorithm: quicksort_iterative
+File: asc1K.dat
+Comparisons: 499499
+Exchanges: 998
+
+Algorithm: natural_merge_sort_iterative
+File: asc2K.dat
+Comparisons: 0
+Exchanges: 1999
+
+Algorithm: quicksort100_iterative
+File: asc2K.dat
+Comparisons: 1993950
+Exchanges: 3797
+
+Algorithm: quicksort50_iterative
+File: asc2K.dat
+Comparisons: 1997725
+Exchanges: 3897
+
+Algorithm: random_pivot_quicksort_iterative
+File: asc2K.dat
+Comparisons: 24585
+Exchanges: 15445
+
+Algorithm: medianQuicksort_iterative
+File: asc2K.dat
+Comparisons: 17964
+Exchanges: 1069
+
+Algorithm: quicksort_iterative
+File: asc2K.dat
+Comparisons: 1998999
+Exchanges: 1998
+
+Algorithm: natural_merge_sort_iterative
+File: asc50.dat
+Comparisons: 0
+Exchanges: 49
+
+Algorithm: quicksort100_iterative
+File: asc50.dat
+Comparisons: 0
+Exchanges: 0
+
+Algorithm: quicksort50_iterative
+File: asc50.dat
+Comparisons: 0
+Exchanges: 0
+
+Algorithm: random_pivot_quicksort_iterative
+File: asc50.dat
+Comparisons: 230
+Exchanges: 180
+
+Algorithm: medianQuicksort_iterative
+File: asc50.dat
+Comparisons: 193
+Exchanges: 43
+
+Algorithm: quicksort_iterative
+File: asc50.dat
+Comparisons: 1224
+Exchanges: 48
+
+Algorithm: natural_merge_sort_iterative
+File: asc5K.dat
+Comparisons: 0
+Exchanges: 4999
+
+Algorithm: quicksort100_iterative
+File: asc5K.dat
+Comparisons: 12492450
+Exchanges: 9797
+
+Algorithm: quicksort50_iterative
+File: asc5K.dat
+Comparisons: 12496225
+Exchanges: 9897
+
+Algorithm: random_pivot_quicksort_iterative
+File: asc5K.dat
+Comparisons: 70459
+Exchanges: 43616
+
+Algorithm: medianQuicksort_iterative
+File: asc5K.dat
+Comparisons: 51822
+Exchanges: 3857
+
+Algorithm: quicksort_iterative
+File: asc5K.dat
+Comparisons: 12497499
+Exchanges: 4998
+
+Algorithm: natural_merge_sort_iterative
+File: ran10K.dat
+Comparisons: 16510068
+Exchanges: 19987
+
+Algorithm: quicksort100_iterative
+File: ran10K.dat
+Comparisons: 268210
+Exchanges: 183428
+
+Algorithm: quicksort50_iterative
+File: ran10K.dat
+Comparisons: 195234
+Exchanges: 99590
+
+Algorithm: random_pivot_quicksort_iterative
+File: ran10K.dat
+Comparisons: 162159
+Exchanges: 86141
+
+Algorithm: medianQuicksort_iterative
+File: ran10K.dat
+Comparisons: 129261
+Exchanges: 31969
+
+Algorithm: quicksort_iterative
+File: ran10K.dat
+Comparisons: 154933
+Exchanges: 30502
+
+Algorithm: natural_merge_sort_iterative
+File: ran1K.dat
+Comparisons: 160970
+Exchanges: 1991
+
+Algorithm: quicksort100_iterative
+File: ran1K.dat
+Comparisons: 24030
+Exchanges: 19309
+
+Algorithm: quicksort50_iterative
+File: ran1K.dat
+Comparisons: 15049
+Exchanges: 9065
+
+Algorithm: random_pivot_quicksort_iterative
+File: ran1K.dat
+Comparisons: 10728
+Exchanges: 6788
+
+Algorithm: medianQuicksort_iterative
+File: ran1K.dat
+Comparisons: 9434
+Exchanges: 2361
+
+Algorithm: quicksort_iterative
+File: ran1K.dat
+Comparisons: 11244
+Exchanges: 2261
+
+Algorithm: natural_merge_sort_iterative
+File: ran2K.dat
+Comparisons: 668176
+Exchanges: 3991
+
+Algorithm: quicksort100_iterative
+File: ran2K.dat
+Comparisons: 47314
+Exchanges: 35245
+
+Algorithm: quicksort50_iterative
+File: ran2K.dat
+Comparisons: 33273
+Exchanges: 19371
+
+Algorithm: random_pivot_quicksort_iterative
+File: ran2K.dat
+Comparisons: 24208
+Exchanges: 13381
+
+Algorithm: medianQuicksort_iterative
+File: ran2K.dat
+Comparisons: 21253
+Exchanges: 5207
+
+Algorithm: quicksort_iterative
+File: ran2K.dat
+Comparisons: 25090
+Exchanges: 5082
+
+Algorithm: natural_merge_sort_iterative
+File: ran50.dat
+Comparisons: 499
+Exchanges: 194
+
+Algorithm: quicksort100_iterative
+File: ran50.dat
+Comparisons: 1857
+Exchanges: 1857
+
+Algorithm: quicksort50_iterative
+File: ran50.dat
+Comparisons: 1014
+Exchanges: 894
+
+Algorithm: random_pivot_quicksort_iterative
+File: ran50.dat
+Comparisons: 670
+Exchanges: 458
+
+Algorithm: medianQuicksort_iterative
+File: ran50.dat
+Comparisons: 520
+Exchanges: 158
+
+Algorithm: quicksort_iterative
+File: ran50.dat
+Comparisons: 560
+Exchanges: 148
+
+Algorithm: natural_merge_sort_iterative
+File: ran5K.dat
+Comparisons: 4141061
+Exchanges: 9990
+
+Algorithm: quicksort100_iterative
+File: ran5K.dat
+Comparisons: 128737
+Exchanges: 86577
+
+Algorithm: quicksort50_iterative
+File: ran5K.dat
+Comparisons: 95833
+Exchanges: 48387
+
+Algorithm: random_pivot_quicksort_iterative
+File: ran5K.dat
+Comparisons: 69644
+Exchanges: 44865
+
+Algorithm: medianQuicksort_iterative
+File: ran5K.dat
+Comparisons: 62898
+Exchanges: 14597
+
+Algorithm: quicksort_iterative
+File: ran5K.dat
+Comparisons: 76667
+Exchanges: 13871
+
+Algorithm: natural_merge_sort_iterative
+File: rev10K.dat
+Comparisons: 9999
+Exchanges: 19998
+
+Algorithm: quicksort100_iterative
+File: rev10K.dat
+Comparisons: 49994900
+Exchanges: 24746
+
+Algorithm: quicksort50_iterative
+File: rev10K.dat
+Comparisons: 49994950
+Exchanges: 21121
+
+Algorithm: random_pivot_quicksort_iterative
+File: rev10K.dat
+Comparisons: 153088
+Exchanges: 95658
+
+Algorithm: medianQuicksort_iterative
+File: rev10K.dat
+Comparisons: 113631
+Exchanges: 12711
+
+Algorithm: quicksort_iterative
+File: rev10K.dat
+Comparisons: 49994999
+Exchanges: 9999
+
+Algorithm: natural_merge_sort_iterative
+File: rev1K.dat
+Comparisons: 999
+Exchanges: 1998
+
+Algorithm: quicksort100_iterative
+File: rev1K.dat
+Comparisons: 499400
+Exchanges: 6746
+
+Algorithm: quicksort50_iterative
+File: rev1K.dat
+Comparisons: 499450
+Exchanges: 3121
+
+Algorithm: random_pivot_quicksort_iterative
+File: rev1K.dat
+Comparisons: 12252
+Exchanges: 7161
+
+Algorithm: medianQuicksort_iterative
+File: rev1K.dat
+Comparisons: 7987
+Exchanges: 1031
+
+Algorithm: quicksort_iterative
+File: rev1K.dat
+Comparisons: 499499
+Exchanges: 999
+
+Algorithm: natural_merge_sort_iterative
+File: rev2K.dat
+Comparisons: 1999
+Exchanges: 3998
+
+Algorithm: quicksort100_iterative
+File: rev2K.dat
+Comparisons: 1998900
+Exchanges: 8746
+
+Algorithm: quicksort50_iterative
+File: rev2K.dat
+Comparisons: 1998950
+Exchanges: 5121
+
+Algorithm: random_pivot_quicksort_iterative
+File: rev2K.dat
+Comparisons: 25737
+Exchanges: 14916
+
+Algorithm: medianQuicksort_iterative
+File: rev2K.dat
+Comparisons: 17964
+Exchanges: 2067
+
+Algorithm: quicksort_iterative
+File: rev2K.dat
+Comparisons: 1998999
+Exchanges: 1999
+
+Algorithm: natural_merge_sort_iterative
+File: rev50.dat
+Comparisons: 49
+Exchanges: 98
+
+Algorithm: quicksort100_iterative
+File: rev50.dat
+Comparisons: 1225
+Exchanges: 1225
+
+Algorithm: quicksort50_iterative
+File: rev50.dat
+Comparisons: 1225
+Exchanges: 1225
+
+Algorithm: random_pivot_quicksort_iterative
+File: rev50.dat
+Comparisons: 213
+Exchanges: 186
+
+Algorithm: medianQuicksort_iterative
+File: rev50.dat
+Comparisons: 193
+Exchanges: 66
+
+Algorithm: quicksort_iterative
+File: rev50.dat
+Comparisons: 1224
+Exchanges: 49
+
+Algorithm: natural_merge_sort_iterative
+File: rev5K.dat
+Comparisons: 4999
+Exchanges: 9998
+
+Algorithm: quicksort100_iterative
+File: rev5K.dat
+Comparisons: 12497400
+Exchanges: 14746
+
+Algorithm: quicksort50_iterative
+File: rev5K.dat
+Comparisons: 12497450
+Exchanges: 11121
+
+Algorithm: random_pivot_quicksort_iterative
+File: rev5K.dat
+Comparisons: 70063
+Exchanges: 44774
+
+Algorithm: medianQuicksort_iterative
+File: rev5K.dat
+Comparisons: 51822
+Exchanges: 6355
+
+Algorithm: quicksort_iterative
+File: rev5K.dat
+Comparisons: 12497499
+Exchanges: 4999
+

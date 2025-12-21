@@ -1,0 +1,30 @@
+{
+    "result": "prediction successful",
+    "json_input": [
+        {
+            "trans_date_trans_time": "2024-09-13 23:34:56",
+            "category": "shopping_net",
+            "amt": 50.75,
+            "day_of_week": "Friday",
+            "hour": 23,
+            "minute": 34,
+            "second": 56,
+            "day_date": 13,
+            "month_date": "September",
+            "year_date": 2024
+        }
+    ],
+    "engineered_features": [
+        {
+            "is_top6_fraud_category": 1,
+            "is_top10_fraud_job": 0,
+            "is_top6_fraud_hour": 1,
+            "is_top4_fraud_month": 0,
+            "is_top3_fraud_day": 0,
+            "log_amt": 3.9464244321454784,
+            "is_suspicious_amt": 0
+        }
+    ],
+    "prediction": 0,
+    "messages": "Starting prediction.<br>GET request detected.<br>Latest JSON file: storage/inputs\\test2.json<br>Loaded JSON payload from storage/inputs\\test2.json<br>Raw JSON DataFrame:<br>[{'trans_date_trans_time': '2024-09-13 23:34:56', 'cc_num': 38859492057661, 'unix_time': 1694775296, 'merchant': 'fraud_Lind-Buckridge', 'category': 'shopping_net', 'amt': 50.75, 'merch_lat': 43.150704, 'merch_long': -112.154481}]<br>Cleaned JSON DataFrame:<br>[{'trans_date_trans_time': Timestamp('2024-09-13 23:34:56'), 'category': 'shopping_net', 'amt': 50.75, 'day_of_week': 'Friday', 'hour': 23, 'minute': 34, 'second': 56, 'day_date': 13, 'month_date': 'September', 'year_date': 2024}]<br>Loaded persisted feature transformers.<br>Engineered features:<br>[{'is_top6_fraud_category': 1, 'is_top10_fraud_job': 0, 'is_top6_fraud_hour': 1, 'is_top4_fraud_month': 0, 'is_top3_fraud_day': 0, 'log_amt': 3.9464244321454784, 'is_suspicious_amt': 0}]<br>prediction: 0"
+}

@@ -1,0 +1,60 @@
+Begin Postfix Converter Log at: 2023-02-24 09:10:57.196495 
+
+Prefix Input # 1: +-CBA 
+Postfix Conversion: CB-A+ 
+
+Prefix Input # 2: +*ABC 
+Postfix Conversion: AB*C+ 
+
+Prefix Input # 3: -A$CB$A 
+Postfix Conversion: Invalid syntax: $. The program is trying to pop from an empty stack. 
+
+Prefix Input # 4: -/*AB*CDA 
+Postfix Conversion: AB*CD*/A- 
+
+Prefix Input # 5: -C+B-C+A+C+C-AB 
+Postfix Conversion: CBCACCAB-+++-+- 
+
+Prefix Input # 6: +*B/A/BC>+A+CB 
+Postfix Conversion: Invalid character: > 
+
+Prefix Input # 7: SomeString 
+Postfix Conversion: Need both operands and operators in input. 
+
+Prefix Input # 8: $+/AB-*CA+CC+BA 
+Postfix Conversion: AB/CA*CC+-+BA+$ 
+
+Prefix Input # 9: $-B+CA$A-*B/C/ACA 
+Postfix Conversion: BCA+-ABCAC//*A-$$ 
+
+Prefix Input # 10: 12+4/3 
+Postfix Conversion: Invalid character: 3 
+
+Prefix Input # 11: $A$A$C$B-AB@ 
+Postfix Conversion: Invalid character: @ 
+
+Prefix Input # 12: (A+B)-C 
+Postfix Conversion: Invalid syntax: -. The program is trying to pop from an empty stack. 
+
+Prefix Input # 13: $+B-/AC+*A*CC/AAB 
+Postfix Conversion: BAC/ACC**AA/+-+B$ 
+
+Prefix Input # 14: +A+A+%AA+A+A+AA 
+Postfix Conversion: Invalid character: % 
+
+Prefix Input # 15: +++++++++++++ 
+Postfix Conversion: Invalid syntax: +. The program is trying to pop from an empty stack. 
+
+Prefix Input # 16: ABC:;=,. 
+Postfix Conversion: Invalid character: . 
+
+Done. 
+Runtime Report: 
+The report took 174400 nanoseconds to run 
+Total lines of prefix input: 16 
+lines with bad characters 14 
+The size of object called input is: 184 bytes 
+Total lines of output: 16 
+lines converted to postfix 8 
+The size of output is: 184 bytes 
+Done. 

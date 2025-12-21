@@ -1,0 +1,2 @@
+Designing Machine Learning Systems: An Iterative Process for Production-Ready Applications
+Machine Learning Design Patterns: Solutions to Common Challenges in Data Preparation, Model Building, and MLOps

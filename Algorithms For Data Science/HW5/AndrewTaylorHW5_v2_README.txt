@@ -1,0 +1,1 @@
+This homework was done in python 3.10 using keras, tensorflow, and cvxopt. A custom environment was required.

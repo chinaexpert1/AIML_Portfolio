@@ -1,0 +1,7 @@
+{
+    "event": "model_trained",
+    "version": "NN_20250502_131651",
+    "model_type": "NN",
+    "model_file": "storage\\models\\model_NN_20250502_131651.pkl",
+    "timestamp": "20250502_131651"
+}

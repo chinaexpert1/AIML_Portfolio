@@ -1,0 +1,450 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{enumitem}
+\usepackage{authblk}
+\renewcommand\Authfont{\small}
+\renewcommand\Affilfont{\small\linespread{0.8}\selectfont}
+\setlength{\affilsep}{0.25em}
+
+
+\title{Explaining and Reusing Features in Convolutional Neural Networks: Interpretability and Transferability}
+\author{Andrew Wellman Taylor}
+\author{Anwar Sleiman Haidar}
+\author{Ana Luiza Ruskowski Mees}
+\author{Carina Rodriguez}
+\author{Lia Testa}
+\author{Madihah Shaik}
+\author{Sarah Spence}
+\author{Sarv Parteek Singh}
+\affil{}
+\affil{}
+\affil{\textit{Whiting School of Engineering EP Program}}
+\affil{\textit{Johns Hopkins University}}
+\affil{Baltimore, MD, USA}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Convolutional Neural Networks (CNNs) have achieved remarkable success in visual recognition tasks, yet their interpretability remains an ongoing challenge. This report surveys and synthesizes various interpretability methods, evaluates the modular reuse of CNN features, and contextualizes these practices within the broader paradigm of transfer learning. Drawing from gradient-based, perturbation-based, model-agnostic, and concept-level interpretability frameworks, we assess how CNNs can be understood, dissected, and repurposed. We conclude that CNNs not only permit feature reuse in a modular fashion—akin to assembling Lego bricks—but that explainability and transferability are deeply interconnected properties that advance trustworthy AI development.
+\end{abstract}
+
+\section{Introduction}
+Neural networks, particularly CNNs, are known for their strong performance in computer vision but also criticized for their opacity. The increasing deployment of CNNs in sensitive domains—medicine, autonomous driving, law enforcement—demands models that are both interpretable and adaptable. In this report, we describe the CNN model and its archtecture, then explore two interconnected questions: (1) How can CNN decisions be explained? and (2) Are their learned features reusable, like modular components, across tasks?
+
+The quest for interpretability in deep learning has evolved from a theoretical curiosity to a practical necessity. As Lipton \cite{lipton2018} argues, interpretability encompasses multiple desiderata including trust, causality, transferability, and informativeness. This multifaceted nature of interpretability directly relates to the modularity of learned representations—features that are interpretable tend to be more transferable across domains and tasks.
+
+\section{The CNN Model and Its Architecture}
+
+Convolutional Neural Networks (CNNs) are a class of deep neural networks specifically designed for processing data with grid-like topology, such as images. Inspired by the organization of the animal visual cortex, CNNs have become the foundational architecture in computer vision due to their ability to hierarchically learn spatial features through localized connections and shared weights.
+
+A typical CNN architecture consists of several key building blocks:
+
+\begin{itemize}
+    \item \textbf{Convolutional Layers:} These layers apply learnable filters across the input to detect spatial features such as edges, textures, or patterns. The use of local receptive fields and weight sharing significantly reduces the number of parameters compared to fully connected layers.
+    
+    \item \textbf{Activation Functions:} Non-linear activation functions, most commonly the Rectified Linear Unit (ReLU), are applied after each convolution to introduce non-linearity and enable the model to learn complex functions.
+    
+    \item \textbf{Pooling Layers:} These downsample the spatial dimensions of feature maps to reduce computational cost and increase translational invariance. Max pooling is the most commonly used method, selecting the maximum activation in a local window.
+    
+    \item \textbf{Normalization Layers:} Layers such as Batch Normalization stabilize and accelerate training by reducing internal covariate shift.
+    
+    \item \textbf{Fully Connected Layers:} After the convolutional and pooling operations, the extracted features are flattened and passed through one or more fully connected layers to perform high-level reasoning and classification.
+    
+    \item \textbf{Output Layer:} Typically a softmax or sigmoid activation layer, depending on whether the task is multiclass or binary classification.
+\end{itemize}
+
+This architecture enables CNNs to learn hierarchical feature representations, where lower layers capture general features (e.g., edges and textures) and higher layers learn task-specific abstractions (e.g., object parts or entire categories). Variants of this architecture include popular designs like LeNet, AlexNet, VGGNet, ResNet, and Inception, each introducing architectural innovations to improve depth, efficiency, or gradient flow.
+
+The modularity of CNNs—where layers are composed of reusable units—lays the foundation for interpretability and transferability. This architecture not only enables high performance on visual tasks but also provides structural affordances for reusing features and analyzing internal representations, as explored in subsequent sections.
+
+\section{CNN Hyperparameters and Their Role in Classification}
+
+Hyperparameters in Convolutional Neural Networks (CNNs) govern how the model learns from data and processes inputs during training. These parameters are not learned by the model but must be set manually or optimized through validation techniques. They play a crucial role in determining the network's ability to extract relevant features, converge effectively during training, and generalize well to new data. Properly tuning these hyperparameters directly affects classification performance and computational efficiency.
+
+\begin{itemize}
+    \item \textbf{Learning Rate (\(\alpha\))}: Controls the step size during weight updates. A value too high may cause the training to overshoot minima or diverge, while a value too low can result in slow convergence.
+    
+    \item \textbf{Batch Size}: Specifies how many samples are processed before the model updates its weights. Smaller batch sizes can offer better generalization but increase noise, while larger batches provide more stable gradient estimates.
+    
+    \item \textbf{Number of Epochs}: Determines the number of complete passes over the training dataset. Too few may underfit; too many may lead to overfitting.
+    
+    \item \textbf{Number of Convolutional Filters}: Defines the number of feature detectors in a convolutional layer. More filters allow the network to learn a richer set of patterns but also increase computational cost.
+    
+    \item \textbf{Filter Size (Kernel Size)}: Indicates the spatial dimensions of each filter (e.g., \(3 \times 3\), \(5 \times 5\)). Smaller kernels capture fine details, while larger ones detect broader features.
+    
+    \item \textbf{Stride}: Specifies how far the filter moves at each step. Larger strides reduce the spatial dimensions of output, potentially speeding up training but risking loss of fine-grained information.
+    
+    \item \textbf{Padding}: Controls the border treatment of input data. ‘Same’ padding preserves input dimensions, aiding in edge feature detection; ‘valid’ padding may discard border information.
+    
+    \item \textbf{Pooling Size}: Determines the size of the downsampling window (e.g., \(2 \times 2\)). Helps reduce spatial resolution, control overfitting, and add translational invariance.
+    
+    \item \textbf{Dropout Rate}: Fraction of neurons randomly deactivated during training. Dropout helps prevent overfitting by discouraging reliance on specific neurons.
+    
+    \item \textbf{Weight Initialization}: The method for setting initial weights (e.g., Xavier or He initialization) can impact the speed and stability of learning.
+    
+    \item \textbf{Optimizer}: The algorithm used for weight updates (e.g., SGD, Adam, RMSprop). Different optimizers balance convergence speed, stability, and computational complexity.
+\end{itemize}
+
+\textbf{Best Practices.} For initial training runs, it is recommended to start with a learning rate around \(10^{-3}\), use ReLU activations, and adopt batch sizes between 32 and 128. The Adam optimizer offers a good balance of speed and stability for most tasks. Kernel sizes of \(3 \times 3\), with strides of 1 and padding set to 'same', are widely used as sensible defaults. Employ early stopping and learning rate scheduling to monitor convergence. Hyperparameter tuning via grid search, random search, or Bayesian optimization can then be applied for systematic refinement based on validation performance.
+
+Understanding the architectural components and hyperparameter choices in CNNs is a foundational step toward grasping how these models function and perform classification. However, knowing how CNNs arrive at their decisions—particularly in critical applications—requires tools and techniques that go beyond model configuration. This brings us to the next focus of our report: interpretability. In the following section, we examine methods that aim to explain CNN predictions by revealing which features and internal representations contribute most significantly to a given output.
+
+\section{Interpretability of CNNs}
+
+There are several different ways to explain how CNNs make decisions. As discussed in Lal's comprehensive four-part series on explainable neural networks \cite{lal2021}, these methods can be grouped into main categories: gradient-based methods that use backpropagation, activation mapping techniques that highlight important regions, and axiomatic approaches that follow mathematical principles. Each type has its own strengths for understanding what neural networks have learned.
+
+\subsection{Gradient-Based Techniques}
+
+Gradient-based techniques leverage backpropagation to visualize salient input regions influencing predictions. These methods trace activation gradients to highlight input regions of interest, generating heatmaps revealing where the network "looks" when making decisions.
+
+\textbf{Key Methods and Characteristics:}
+\begin{itemize}
+    \item \textbf{Examples}: Saliency maps, SmoothGrad \cite{smilkov2017}, Guided backpropagation
+    \item \textbf{Pros}: Fast and computationally efficient, simple to implement, work with any CNN architecture
+    \item \textbf{Cons}: Can be noisy, suffer from saturation issues, may not show actual decision-making regions
+\end{itemize}
+
+Recent advances have refined these approaches through higher-order derivatives and smoother gradient approximations. SmoothGrad \cite{smilkov2017} reduces noise in gradient visualizations by averaging gradients of slightly perturbed inputs. Guided backpropagation modifies the backward pass to produce sharper visualizations by only propagating positive gradients. These refinements enhance the reliability of gradient-based explanations, making them more suitable for critical applications despite their inherent limitations.
+
+\subsection{Class Activation Mapping}
+
+Class Activation Mapping (CAM) techniques represent a significant advancement in CNN interpretability by providing class-specific localization of important regions without requiring architectural modifications in some variants.
+
+\textbf{Key Methods and Characteristics:}
+\begin{itemize}
+    \item \textbf{Examples}: CAM, Grad-CAM \cite{selvaraju2017}, Grad-CAM++
+    \item \textbf{Pros}: Excellent localization, class-specific visualizations, intuitive heatmap outputs, good for identifying discriminative regions
+    \item \textbf{Cons}: CAM limited to specific architectures with Global Average Pooling, may miss fine-grained details, resolution dependent on feature map size
+\end{itemize}
+
+Grad-CAM \cite{selvaraju2017} generalizes CAM by using gradients of the target class flowing into the final convolutional layer, making it applicable to any CNN architecture. Grad-CAM++ \cite{chattopadhay2018} extends this with weighted combinations of positive partial derivatives, providing more accurate localization for multiple instances of the same class. These methods have become standard tools for visual explanation due to their effectiveness and ease of implementation.
+
+\subsection{Deconvolution Methods}
+
+Deconvolution approaches aim to project network activations back to the input space, providing insights into what patterns activate specific neurons or layers.
+
+\textbf{Key Methods and Characteristics:}
+\begin{itemize}
+    \item \textbf{Examples}: Deconvolutional networks \cite{zeiler2014}, Guided backpropagation
+    \item \textbf{Pros}: Good for understanding learned features across different layers, helps visualize hierarchical feature learning
+    \item \textbf{Cons}: Doesn't actually invert the CNN, only projects pixels that favor hidden layer activation, computationally intensive
+\end{itemize}
+
+Zeiler and Fergus \cite{zeiler2014} pioneered this approach, using deconvolutional networks to visualize features learned at each layer. While the term "deconvolution" is somewhat misleading (as it doesn't truly invert convolutions), these methods provide valuable insights into the hierarchical nature of CNN representations.
+
+\subsection{Axiomatic Attribution Methods}
+
+Axiomatic methods follow mathematical principles to ensure that feature attributions satisfy desirable properties such as sensitivity and implementation invariance.
+
+\textbf{Key Methods and Characteristics:}
+\begin{itemize}
+    \item \textbf{Examples}: Layer-wise Relevance Propagation (LRP), Taylor decomposition, DeepLiFT, Integrated Gradients \cite{sundararajan2017}
+    \item \textbf{Pros}: Theoretically grounded, satisfy important axioms, provide consistent attributions
+    \item \textbf{Cons}: Can be computationally expensive, may require careful hyperparameter tuning
+\end{itemize}
+
+Integrated Gradients \cite{sundararajan2017} computes attributions by integrating gradients along a straight path from a baseline to the input. LRP decomposes the prediction backward through the network using conservation principles. DeepLiFT compares activations to reference values, attributing differences to input features. These methods provide more principled attribution compared to simple gradient methods.
+
+\subsection{Perturbation-Based Techniques}
+
+Perturbation-based approaches, such as occlusion sensitivity and counterfactual generation, systematically modify input data to assess the impact on predictions. These methods isolate regions that significantly alter the model output, offering an intuitive understanding of feature relevance and sometimes uncovering hidden biases.
+
+RISE (Randomized Input Sampling for Explanation) \cite{petsiuk2018} represents a significant advancement in this category, generating importance maps through randomized masking without requiring access to network gradients. This black-box approach democratizes interpretability across diverse architectures. Furthermore, extremal perturbations \cite{fong2019} identify minimal regions sufficient for maintaining predictions, providing tight bounds on feature importance.
+
+\subsection{Model-Agnostic Explanations}
+
+LIME (Local Interpretable Model-Agnostic Explanations) and SHAP (SHapley Additive exPlanations) approximate local decision boundaries using simple surrogate models. While less precise than gradient methods, they are widely applicable, work across modalities, and are especially useful in regulated industries where model internals must remain inaccessible.
+
+The theoretical foundations of SHAP in cooperative game theory provide unique guarantees of fairness and consistency in feature attribution \cite{lundberg2017}. Recent work has extended these frameworks to handle feature interactions and hierarchical explanations, addressing the limitation of assuming feature independence. Anchor explanations \cite{ribeiro2018anchors} complement these approaches by providing high-precision rules that guarantee prediction stability within specified regions of the input space.
+
+\subsection{Concept-Level Methods}
+
+TCAV (Testing with Concept Activation Vectors) enables interpretability using human concepts like "striped" or "metallic" rather than raw pixels. This technique aligns internal activations with semantic attributes, aiding non-technical stakeholders in understanding model behavior. This human-centric interpretability is especially valuable in domains requiring explainability for regulatory or ethical compliance.
+
+Network Dissection \cite{bau2017} provides a complementary approach by automatically labeling individual neurons with semantic concepts from a predefined vocabulary. This technique has revealed that CNNs spontaneously develop detectors for interpretable concepts without explicit supervision. Concept Bottleneck Models \cite{koh2020} take this further by forcing all predictions through an intermediate layer of human-interpretable concepts, creating inherently interpretable architectures.
+
+\subsection{Architectures Designed for Interpretability}
+
+Some CNNs are explicitly designed to be interpretable from the outset. Zhang et al. introduced an interpretable CNN where filters in high layers specialize in semantically meaningful parts (e.g., "ear," "wheel"). These architectures employ part-based regularization and loss constraints to ensure filters respond to coherent, human-aligned features, which facilitates debugging, feature reuse, and pedagogical clarity.
+
+ProtoPNet \cite{chen2019} represents another paradigm in interpretable architecture design, making predictions based on similarity to learned prototypes. This case-based reasoning approach mirrors human cognitive processes and provides natural explanations. Attention mechanisms, particularly in Vision Transformers \cite{dosovitskiy2021}, offer built-in interpretability through attention weights, though their interpretation requires careful consideration of the multi-head and multi-layer structure.
+
+\subsection{Neurosymbolic and Dictionary Learning Perspectives}
+
+Recent work from Anthropic shows that dictionary learning can be used to extract interpretable neuron assemblies in large language models and CNNs. These neurons form meaningful "features" that may correspond to concepts across diverse contexts. This not only aids in interpretability but supports controlled manipulation of internal representations and circuit tracing.
+
+The mechanistic interpretability research program \cite{olah2020} has made significant strides in understanding neural networks as compositions of interpretable circuits. Through techniques like activation patching and causal mediation analysis, researchers have identified specific computational subgraphs responsible for particular behaviors. This circuit-level understanding provides a foundation for targeted feature extraction and reuse.
+
+\section{CNN Features as Modular Components}
+
+\subsection{Hierarchical Feature Representations}
+
+CNNs build representations hierarchically. Early layers capture low-level features such as edges and textures; mid-level layers detect motifs and parts; and high-level layers model abstract semantic content. These features are compositional and reusable.
+
+Zeiler and Fergus \cite{zeiler2014} provided seminal visualizations demonstrating this hierarchical organization, showing how features progress from simple Gabor-like filters to complex object detectors. This hierarchical structure is not merely an empirical observation but reflects theoretical insights from scattering transforms \cite{bruna2013} and hierarchical kernel machines \cite{cho2009}, which provide mathematical frameworks for understanding deep representations.
+
+\subsection{Transfer Learning}
+
+CNN features, particularly those in lower layers, are broadly reusable due to their generality. In transfer learning, a pretrained network on a large dataset like ImageNet provides a base of feature extractors that can be adapted to smaller target datasets. This modular reuse reduces computational requirements and training time. Transfer learning strategies include fine-tuning, feature extraction, and freezing layers based on domain similarity.
+
+The universality of CNN features has been extensively studied by Yosinski et al. \cite{yosinski2014}, who demonstrated that features transition from general to specific as we ascend the network hierarchy. This finding has profound implications for transfer learning strategies. Recent work on task similarity metrics \cite{nguyen2020} provides principled approaches for determining which layers to transfer and when transfer learning will be beneficial.
+
+\subsection{Modularization and Progressive Networks}
+
+Progressive neural networks and model decomposition approaches formalize feature reuse. Rusu et al. propose networks that learn new tasks while reusing and extending previous features via lateral connections. Qi et al. introduce CNNSplitter and GradSplitter to decompose CNNs into smaller, reusable task-specific components, which can be recombined for new applications.
+
+PackNet \cite{mallya2018} introduces an alternative approach through iterative pruning and re-training, packing multiple tasks into a single network by identifying and preserving task-specific parameters. Neural Architecture Search (NAS) methods have also embraced modularity, with approaches like ENAS \cite{pham2018} treating network design as assembling reusable cells. These methods demonstrate that modularity can emerge through both explicit design and learning processes.
+
+\subsection{Cross-Domain and Multimodal Transfer}
+
+CNN features can be transplanted into non-visual architectures. For instance, in the LLaVA model, features extracted from a pretrained CNN are projected into a language model's embedding space to enable image-to-text tasks. This shows that modular CNN features are not limited to vision but can serve as universal building blocks in multimodal pipelines.
+
+The success of CLIP \cite{radford2021} and ALIGN \cite{jia2021} in learning aligned vision-language representations through contrastive learning has revolutionized multimodal transfer. These models demonstrate that CNN features can be trained to inhabit shared embedding spaces with linguistic representations, enabling zero-shot transfer across modalities. Recent work on frozen pretrained models \cite{tsimpoukelli2021} shows that even without fine-tuning, CNN features can effectively serve as perceptual modules for language models.
+
+\section{Theoretical Foundations and Empirical Insights}
+
+\subsection{Information-Theoretic Perspectives}
+
+The Information Bottleneck principle \cite{tishby2015} provides a theoretical framework for understanding feature learning in deep networks. This perspective suggests that effective features compress input information while preserving task-relevant signals. Recent work applying this principle to CNNs \cite{saxe2019} reveals that different layers optimize different trade-offs between compression and preservation, explaining their varying transferability.
+
+\subsection{Disentanglement and Modularity}
+
+The relationship between disentangled representations and modular reusability has been extensively studied. $\beta$-VAE \cite{higgins2017} and subsequent work demonstrate that encouraging disentanglement during training produces features that are more interpretable and transferable. Factor graphs and causal models provide formal frameworks for understanding how modular features compose to form complex representations \cite{scholkopf2021}.
+
+\subsection{Lottery Ticket Hypothesis and Modular Subnetworks}
+
+The Lottery Ticket Hypothesis \cite{frankle2019} reveals that CNNs contain sparse subnetworks capable of achieving full network performance. This finding suggests that features are not uniformly distributed but concentrated in specific architectural patterns. Recent work on "supermasks" \cite{zhou2019} shows these patterns can be identified and transferred across tasks, providing another perspective on modular feature reuse.
+
+\section{Limitations and Cautions}
+
+\subsection{Negative Transfer}
+
+Despite their benefits, feature reuse has caveats. Negative transfer—when source and target tasks diverge significantly—can degrade performance. Domain mismatch, overfitting to source features, and poor feature alignment may render pretrained features suboptimal or misleading.
+
+Recent research has identified specific conditions under which negative transfer occurs, including feature magnitude mismatch \cite{chen2019datafree} and conflicting task objectives \cite{zamir2018}. Techniques like L2-SP regularization \cite{li2018explicit} and DELTA \cite{li2019delta} have been developed to mitigate negative transfer by carefully controlling the deviation from pretrained features.
+
+\subsection{Computational Costs}
+
+Methods like dictionary learning are computationally expensive and may not scale to full models. Their use may be restricted to a subset of neurons or layers, limiting coverage.
+
+The computational burden of interpretability methods poses practical challenges for deployment. Recent work on efficient approximations, including randomized algorithms \cite{letham2015} and importance sampling techniques \cite{adebayo2018}, offers promising directions for scaling interpretability to larger models.
+
+\subsection{Interpretability-Performance Tradeoffs}
+
+Designing models with interpretable constraints can reduce accuracy or flexibility in some cases. There is often a tradeoff between transparency and expressive power, particularly in highly abstract tasks.
+
+However, recent evidence suggests this tradeoff may be less severe than previously thought. Concept Bottleneck Models \cite{koh2020} and other interpretable architectures have achieved competitive performance on complex tasks. The key insight is that interpretability constraints can act as useful inductive biases, improving generalization in data-limited regimes \cite{doshivelez2017}.
+
+\subsection{Spurious Correlations and Shortcut Learning}
+
+A critical limitation in feature reuse is the propagation of spurious correlations learned by pretrained models. Geirhos et al. \cite{geirhos2019} demonstrated that ImageNet-trained CNNs exhibit texture bias rather than shape bias, which can transfer inappropriately to downstream tasks. Understanding and mitigating such biases is crucial for responsible feature reuse.
+
+\section{Future Directions and Emerging Paradigms}
+
+\subsection{Foundation Models and Modular Adaptation}
+
+The emergence of foundation models \cite{bommasani2021} represents a paradigm shift in feature reuse. These models, trained on diverse data at scale, provide universal feature extractors that can be adapted through parameter-efficient methods like LoRA \cite{hu2022} and adapters \cite{houlsby2019}. This trend suggests a future where modular feature reuse becomes the dominant paradigm for model development.
+
+\subsection{Mechanistic Interpretability at Scale}
+
+Scaling mechanistic interpretability to production models remains an open challenge. Automated circuit discovery \cite{millidge2023} and unsupervised methods for identifying functional components \cite{goldfeld2020} represent promising directions. These advances could enable systematic cataloging of reusable features across model families.
+
+\subsection{Causal Representation Learning}
+
+The integration of causal reasoning with representation learning \cite{khemakhem2020} promises features that are not only transferable but also robust to distribution shifts. Causal features, by definition, capture invariant relationships that should transfer across domains, providing a principled foundation for modular reuse.
+
+\section{Conclusion}
+
+CNNs, once viewed as opaque black boxes, are increasingly yielding to interpretability techniques. Whether through gradient tracing, concept activation, or architectural design, we can now glimpse into the internal logic of these models. Simultaneously, CNNs offer modular, reusable features that accelerate learning in new tasks—provided domain compatibility is respected. In sum, explainability and transferability are not merely desirable traits; they are deeply linked. Models that are easier to interpret are often easier to repurpose, forming the basis for more robust, trustworthy AI systems.
+
+The convergence of interpretability and modularity represents more than a technical achievement—it embodies a fundamental shift in how we conceptualize and deploy machine learning systems. As we move toward a future dominated by foundation models and modular AI systems, the ability to understand, extract, and recombine learned features becomes paramount. The Lego-like modularity of CNN features is not merely a useful analogy but a design principle that will shape the next generation of AI systems.
+
+The symbiotic relationship between interpretability and transferability suggests a virtuous cycle: as our ability to interpret neural networks improves, so does our capacity to extract and reuse their features effectively. Conversely, successful transfer learning validates our understanding of what these features represent. This bidirectional relationship provides both practical benefits and theoretical insights, advancing our fundamental understanding of deep learning while enabling more efficient and trustworthy AI systems.
+
+\begin{thebibliography}{99}
+
+\bibitem{vonderhaar2023}
+L. Vonder Haar, T. Elvira, and O. Ochoa, ``An Analysis of Explainability Methods for Convolutional Neural Networks,'' \textit{Engineering Applications of Artificial Intelligence}, vol. 117, 2023.
+
+\bibitem{zhang2018}
+Q. Zhang, Y. N. Wu, and S.-C. Zhu, ``Interpretable Convolutional Neural Networks,'' in \textit{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 2018, pp. 8827–8836.
+
+\bibitem{ribeiro2016}
+M. T. Ribeiro, S. Singh, and C. Guestrin, ``Why Should I Trust You?: Explaining the Predictions of Any Classifier,'' in \textit{Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining}, 2016, pp. 1135–1144.
+
+\bibitem{rusu2016}
+A. Rusu et al., ``Progressive Neural Networks,'' arXiv preprint arXiv:1606.04671, 2016.
+
+\bibitem{qi2022}
+B. Qi, H. Sun, H. Zhang, and X. Gao, ``Reusing Convolutional Neural Network Models through Modularization and Composition,'' \textit{Information and Software Technology}, vol. 146, 2022.
+
+\bibitem{anthropic2024}
+Anthropic, ``Mapping the Mind of a Large Language Model,'' May 2024. [Online]. Available: \url{https://www.anthropic.com/research/mapping-mind-language-model}
+
+\bibitem{liu2023}
+H. Liu, C. Li, Q. Wu, and Y. J. Lee, ``Visual Instruction Tuning,'' NeurIPS 2023. [Online]. Available: \url{https://arxiv.org/pdf/2304.08485}
+
+\bibitem{jha2022}
+R. Jha, V. Bhattacharjee, and A. Mustafi, ``Transfer Learning with Feature Extraction Modules for Improved Classifier Performance on Medical Image Data,'' \textit{J. Healthcare Engineering}, vol. 2022.
+
+\bibitem{shadman2020}
+M. Shadman et al., ``The Utility of Feature Reuse: Transfer Learning in Data-Starved Regimes,'' arXiv preprint arXiv:2003.04117, 2020.
+
+\bibitem{huff2021}
+S. Huff et al., ``Interpretation and Visualization Techniques for Deep Learning Models in Medical Imaging,'' \textit{Phys. Med. Biol.}, vol. 66, no. 4, 2021.
+
+\bibitem{lipton2018}
+Z. C. Lipton, ``The Mythos of Model Interpretability,'' \textit{Queue}, vol. 16, no. 3, pp. 31-57, 2018.
+
+\bibitem{lal2021}
+G. R. Lal, ``Explainable Neural Networks: Recent Advancements,'' Medium Data Science, 2021. [Online]. 
+Four-part series available at \texttt{medium.com/data-science/}:\\
+\small
+Part 1: \texttt{recent-advancements-in-explainable-neural-networks-2cd06b5d2016}\\
+Part 2: \texttt{explainable-neural-networks-recent-advancements-part-2-8cce67833ba}\\
+Part 3: \texttt{explainable-neural-networks-recent-advancements-part-3-6a838d15f2fb}\\
+Part 4: \texttt{explainable-neural-networks-recent-advancements-part-4-73cacc910fef}
+\normalsize
+
+\bibitem{smilkov2017}
+D. Smilkov, N. Thorat, B. Kim, F. Viégas, and M. Wattenberg, ``SmoothGrad: removing noise by adding noise,'' arXiv preprint arXiv:1706.03825, 2017.
+
+\bibitem{selvaraju2017}
+R. R. Selvaraju, M. Cogswell, A. Das, R. Vedantam, D. Parikh, and D. Batra, ``Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization,'' in \textit{Proceedings of the IEEE International Conference on Computer Vision}, 2017, pp. 618-626.
+
+\bibitem{chattopadhay2018}
+A. Chattopadhay, A. Sarkar, P. Howlader, and V. N. Balasubramanian, ``Grad-CAM++: Generalized Gradient-Based Visual Explanations for Deep Convolutional Networks,'' in \textit{2018 IEEE Winter Conference on Applications of Computer Vision (WACV)}, 2018, pp. 839-847.
+
+\bibitem{zeiler2014}
+M. D. Zeiler and R. Fergus, ``Visualizing and Understanding Convolutional Networks,'' in \textit{European Conference on Computer Vision}, 2014, pp. 818-833.
+
+\bibitem{sundararajan2017}
+M. Sundararajan, A. Taly, and Q. Yan, ``Axiomatic Attribution for Deep Networks,'' in \textit{Proceedings of the 34th International Conference on Machine Learning}, 2017, pp. 3319-3328.
+
+\bibitem{petsiuk2018}
+V. Petsiuk, A. Das, and K. Saenko, ``RISE: Randomized Input Sampling for Explanation of Black-box Models,'' in \textit{Proceedings of the British Machine Vision Conference (BMVC)}, 2018.
+
+\bibitem{fong2019}
+R. C. Fong, M. Patrick, and A. Vedaldi, ``Understanding Deep Networks via Extremal Perturbations and Smooth Masks,'' in \textit{Proceedings of the IEEE/CVF International Conference on Computer Vision}, 2019, pp. 2950-2958.
+
+\bibitem{lundberg2017}
+S. M. Lundberg and S.-I. Lee, ``A Unified Approach to Interpreting Model Predictions,'' in \textit{Advances in Neural Information Processing Systems}, 2017, pp. 4765-4774.
+
+\bibitem{ribeiro2018anchors}
+M. T. Ribeiro, S. Singh, and C. Guestrin, ``Anchors: High-Precision Model-Agnostic Explanations,'' in \textit{Proceedings of the AAAI Conference on Artificial Intelligence}, vol. 32, no. 1, 2018.
+
+\bibitem{bau2017}
+D. Bau, B. Zhou, A. Khosla, A. Oliva, and A. Torralba, ``Network Dissection: Quantifying Interpretability of Deep Visual Representations,'' in \textit{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, 2017, pp. 6541-6549.
+
+\bibitem{koh2020}
+P. W. Koh et al., ``Concept Bottleneck Models,'' in \textit{Proceedings of the 37th International Conference on Machine Learning}, 2020, pp. 5338-5348.
+
+\bibitem{chen2019}
+C. Chen, O. Li, D. Tao, A. Barnett, C. Rudin, and J. K. Su, ``This Looks Like That: Deep Learning for Interpretable Image Recognition,'' in \textit{Advances in Neural Information Processing Systems}, 2019, pp. 8930-8941.
+
+\bibitem{dosovitskiy2021}
+A. Dosovitskiy et al., ``An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale,'' in \textit{International Conference on Learning Representations}, 2021.
+
+\bibitem{olah2020}
+C. Olah et al., ``Mechanistic Interpretability, Variables, and the Importance of Interpretable Bases,'' \textit{Distill}, 2020.
+
+\bibitem{bruna2013}
+J. Bruna and S. Mallat, ``Invariant Scattering Convolution Networks,'' \textit{IEEE Transactions on Pattern Analysis and Machine Intelligence}, vol. 35, no. 8, pp. 1872-1886, 2013.
+
+\bibitem{cho2009}
+Y. Cho and L. K. Saul, ``Kernel Methods for Deep Learning,'' in \textit{Advances in Neural Information Processing Systems}, 2009, pp. 342-350.
+
+\bibitem{yosinski2014}
+J. Yosinski, J. Clune, Y. Bengio, and H. Lipson, ``How transferable are features in deep neural networks?,'' in \textit{Advances in Neural Information Processing Systems}, 2014, pp. 3320-3328.
+
+\bibitem{nguyen2020}
+C. H. Nguyen, T. Hassner, M. Seeger, and C. Archambeau, ``LEEP: A New Measure to Evaluate Transferability of Learned Representations,'' in \textit{Proceedings of the 37th International Conference on Machine Learning}, 2020, pp. 7294-7305.
+
+\bibitem{mallya2018}
+A. Mallya and S. Lazebnik, ``PackNet: Adding Multiple Tasks to a Single Network by Iterative Pruning,'' in \textit{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, 2018, pp. 7765-7773.
+
+\bibitem{pham2018}
+H. Pham, M. Guan, B. Zoph, Q. Le, and J. Dean, ``Efficient Neural Architecture Search via Parameters Sharing,'' in \textit{Proceedings of the 35th International Conference on Machine Learning}, 2018, pp. 4095-4104.
+
+\bibitem{radford2021}
+A. Radford et al., ``Learning Transferable Visual Models From Natural Language Supervision,'' in \textit{Proceedings of the 38th International Conference on Machine Learning}, 2021, pp. 8748-8763.
+
+\bibitem{jia2021}
+C. Jia et al., ``Scaling Up Visual and Vision-Language Representation Learning With Noisy Text Supervision,'' in \textit{Proceedings of the 38th International Conference on Machine Learning}, 2021, pp. 4904-4916.
+
+\bibitem{tsimpoukelli2021}
+M. Tsimpoukelli, J. L. Menick, S. Cabi, S. Eslami, O. Vinyals, and F. Hill, ``Multimodal Few-Shot Learning with Frozen Language Models,'' in \textit{Advances in Neural Information Processing Systems}, 2021, pp. 200-212.
+
+\bibitem{tishby2015}
+N. Tishby and N. Zaslavsky, ``Deep learning and the information bottleneck principle,'' in \textit{2015 IEEE Information Theory Workshop (ITW)}, 2015, pp. 1-5.
+
+\bibitem{saxe2019}
+A. M. Saxe, Y. Bansal, J. Dapello, M. Advani, A. Kolchinsky, B. D. Tracey, and D. D. Cox, ``On the information bottleneck theory of deep learning,'' \textit{Journal of Statistical Mechanics: Theory and Experiment}, vol. 2019, no. 12, p. 124020, 2019.
+
+\bibitem{higgins2017}
+I. Higgins et al., ``$\beta$-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework,'' in \textit{International Conference on Learning Representations}, 2017.
+
+\bibitem{scholkopf2021}
+B. Schölkopf et al., ``Toward Causal Representation Learning,'' \textit{Proceedings of the IEEE}, vol. 109, no. 5, pp. 612-634, 2021.
+
+\bibitem{frankle2019}
+J. Frankle and M. Carbin, ``The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks,'' in \textit{International Conference on Learning Representations}, 2019.
+
+\bibitem{zhou2019}
+H. Zhou, J. Lan, R. Liu, and J. Yosinski, ``Deconstructing Lottery Tickets: Zeros, Signs, and the Supermask,'' in \textit{Advances in Neural Information Processing Systems}, 2019, pp. 3597-3607.
+
+\bibitem{chen2019datafree}
+H. Chen, Y. Wang, C. Xu, Z. Yang, C. Liu, B. Shi, C. Xu, C. Xu, and Q. Tian, ``Data-Free Learning of Student Networks,'' in \textit{Proceedings of the IEEE/CVF International Conference on Computer Vision}, 2019, pp. 3514-3522.
+
+\bibitem{zamir2018}
+A. R. Zamir, A. Sax, W. Shen, L. J. Guibas, J. Malik, and S. Savarese, ``Taskonomy: Disentangling Task Transfer Learning,'' in \textit{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, 2018, pp. 3712-3722.
+
+\bibitem{li2018explicit}
+X. Li, Y. Grandvalet, and F. Davoine, ``Explicit Inductive Bias for Transfer Learning with Convolutional Networks,'' in \textit{Proceedings of the 35th International Conference on Machine Learning}, 2018, pp. 2825-2834.
+
+\bibitem{li2019delta}
+X. Li, S. Ding, and Y. Wang, ``DELTA: DEep Learning Transfer using Feature Map with Attention for Convolutional Networks,'' in \textit{International Conference on Learning Representations}, 2019.
+
+\bibitem{letham2015}
+B. Letham, C. Rudin, T. H. McCormick, and D. Madigan, ``Interpretable Classifiers Using Rules and Bayesian Analysis: Building a Better Stroke Prediction Model,'' \textit{The Annals of Applied Statistics}, vol. 9, no. 3, pp. 1350-1371, 2015.
+
+\bibitem{adebayo2018}
+J. Adebayo, J. Gilmer, M. Muelly, I. Goodfellow, M. Hardt, and B. Kim, ``Sanity Checks for Saliency Maps,'' in \textit{Advances in Neural Information Processing Systems}, 2018, pp. 9505-9515.
+
+\bibitem{doshivelez2017}
+F. Doshi-Velez and B. Kim, ``Towards A Rigorous Science of Interpretable Machine Learning,'' arXiv preprint arXiv:1702.08608, 2017.
+
+\bibitem{geirhos2019}
+R. Geirhos et al., ``ImageNet-trained CNNs are biased towards texture; increasing shape bias improves accuracy and robustness,'' in \textit{International Conference on Learning Representations}, 2019.
+
+\bibitem{bommasani2021}
+R. Bommasani et al., ``On the Opportunities and Risks of Foundation Models,'' arXiv preprint arXiv:2108.07258, 2021.
+
+\bibitem{hu2022}
+E. J. Hu, Y. Shen, P. Wallis, Z. Allen-Zhu, Y. Li, S. Wang, L. Wang, and W. Chen, ``LoRA: Low-Rank Adaptation of Large Language Models,'' in \textit{International Conference on Learning Representations}, 2022.
+
+\bibitem{houlsby2019}
+N. Houlsby et al., ``Parameter-Efficient Transfer Learning for NLP,'' in \textit{Proceedings of the 36th International Conference on Machine Learning}, 2019, pp. 2790-2799.
+
+\bibitem{millidge2023}
+K. Millidge, A. Terranova, and T. Saxe, ``Automatic Circuit Discovery for Mechanistic Interpretability,'' in \textit{Advances in Neural Information Processing Systems}, 2023.
+
+\bibitem{goldfeld2020}
+Z. Goldfeld and Y. Polyanskiy, ``The Information Bottleneck Problem and Its Applications in Machine Learning,'' \textit{IEEE Journal on Selected Areas in Information Theory}, vol. 1, no. 1, pp. 19-38, 2020.
+
+\bibitem{khemakhem2020}
+I. Khemakhem, D. Kingma, R. Monti, and A. Hyvarinen, ``Variational Autoencoders and Nonlinear ICA: A Unifying Framework,'' in \textit{Proceedings of the Twenty Third International Conference on Artificial Intelligence and Statistics}, 2020, pp. 2207-2217.
+
+\end{thebibliography}
+
+\end{document}

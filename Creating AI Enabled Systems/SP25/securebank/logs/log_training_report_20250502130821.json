@@ -1,0 +1,258 @@
+{
+    "event": "model_trained",
+    "model_type": "XGB",
+    "model_file": "storage\\models\\model_XGB_20250502_130820.pkl",
+    "classification_report": {
+        "0.0": {
+            "precision": 0.9996833062824116,
+            "recall": 0.9384941281403301,
+            "f1-score": 0.9681228315666391,
+            "support": 53816.0
+        },
+        "1.0": {
+            "precision": 0.062057240011334655,
+            "recall": 0.9319148936170213,
+            "f1-score": 0.11636556854410202,
+            "support": 235.0
+        },
+        "accuracy": 0.9384655233020666,
+        "macro avg": {
+            "precision": 0.5308702731468732,
+            "recall": 0.9352045108786757,
+            "f1-score": 0.5422442000553706,
+            "support": 54051.0
+        },
+        "weighted avg": {
+            "precision": 0.995606746633678,
+            "recall": 0.9384655233020666,
+            "f1-score": 0.9644196076334965,
+            "support": 54051.0
+        }
+    },
+    "confusion_matrix": [
+        [
+            50506,
+            3310
+        ],
+        [
+            16,
+            219
+        ]
+    ],
+    "messages": [
+        "\n=== Dataset Information ===",
+        "DataFrame shape: (540507, 15)",
+        "\nColumn datatypes:",
+        "trans_date_trans_time     object\nunix_time                float64\nmerchant                  object\ncategory                  object\namt                      float64\nfraud_label              float64\nzip                      float64\ncity_pop                 float64\njob                       object\nday_of_week               object\nhour                       int64\nminute                     int64\nsecond                     int64\nday_date                   int64\nmonth_date                object\ndtype: object",
+        "\nSample data:",
+        "  trans_date_trans_time     unix_time                             merchant      category     amt  ...  hour  minute  second day_date month_date\n0   2019-09-19 06:55:18  1.348038e+09  fraud_Johnston, Nikolaus and Maggio   GROCERY_NET   65.70  ...     6      55      18       19  September\n1   2019-12-23 20:57:37  1.356296e+09                     fraud_Bednar PLC     kids_pets   26.10  ...    20      57      37       23   December\n2   2019-07-28 15:17:15  1.343489e+09                    fraud_Friesen Inc  SHOPPING_POS    3.92  ...    15      17      15       28       July\n3   2019-06-24 14:57:46  1.340550e+09                      fraud_Rau-Grant     KIDS_PETS   36.91  ...    14      57      46       24       June\n4   2019-11-03 13:14:43  1.351948e+09              fraud_Bogisich-Homenick      MISC_NET  184.21  ...    13      14      43        3   November\n\n[5 rows x 15 columns]",
+        "\nClass distribution:",
+        "fraud_label\n0.0    538156\n1.0      2351\nName: count, dtype: int64",
+        "Fraud percentage: 0.43%",
+        "[DEBUG] df_engineered.columns: ['is_top6_fraud_category', 'is_top10_fraud_job', 'is_top6_fraud_hour', 'is_top4_fraud_month', 'is_top3_fraud_day', 'log_amt', 'is_suspicious_amt', 'fraud_label']",
+        "[\n  \"Encoded category: 28 unique values\",\n  \"Encoded day_of_week: 7 unique values\",\n  \"Encoded month_date: 12 unique values\",\n  \"\\nSample of encoded data:\",\n  \"   category  day_of_week  month_date\\n0         3            4          11\\n1        21            1           2\\n2        12            3           5\\n3         7            1           6\\n4         8            3           9\",\n  \"\\n=== Top Merchants with Fraud ===\",\n  \"['fraud_Padberg-Welch', 'fraud_Mosciski, Ziemann and Farrell', 'fraud_Gottlieb, Considine and Schultz', 'fraud_Lockman Ltd', 'fraud_Heathcote, Yost and Kertzmann']\",\n  \"\\n=== Top Categories with Fraud ===\",\n  \"[18, 25, 11, 4, 8, 22]\",\n  \"\\n=== Top Jobs with Fraud ===\",\n  \"[]\",\n  \"\\n=== Top Hours with Fraud ===\",\n  \"[23, 22, 0, 2, 3, 1]\",\n  \"\\n=== Top Months with Fraud ===\",\n  \"[8, 7, 1, 2]\",\n  \"\\n=== Top Days with Fraud ===\",\n  \"[3, 1, 0]\",\n  \"\\n=== Top ZIP Codes with Fraud ===\",\n  \"[]\",\n  \"\\n=== Suspicious Transaction Amounts ===\",\n  \"Overall fraud rate: 0.43%\",\n  \"Amount ranges with high fraud rates:\",\n  \"  (195.74, 22768.11]: 6.56% fraud rate (27025 transactions)\",\n  \"\\n=== Engineered Features Summary ===\",\n  \"       is_top6_fraud_category  is_top10_fraud_job  is_top6_fraud_hour  is_top4_fraud_month  is_top3_fraud_day        log_amt  is_suspicious_amt    fraud_label\\ncount           540507.000000            540507.0       540507.000000        540507.000000      540507.000000  540507.000000      540507.000000  540507.000000\\nmean                 0.218980                 0.0            0.233157             0.403462           0.501081       3.525275           0.049999       0.004350\\nstd                  0.413555                 0.0            0.422842             0.490592           0.499999       1.288895           0.217944       0.065808\\nmin                  0.000000                 0.0            0.000000             0.000000           0.000000       0.693147           0.000000       0.000000\\n25%                  0.000000                 0.0            0.000000             0.000000           0.000000       2.360854           0.000000       0.000000\\n50%                  0.000000                 0.0            0.000000             0.000000           1.000000       3.871409           0.000000       0.000000\\n75%                  0.000000                 0.0            0.000000             1.000000           1.000000       4.427836           0.000000       0.000000\\nmax                  1.000000                 0.0            1.000000             1.000000           1.000000      10.033160           1.000000       1.000000\",\n  \"\\nFinal engineered dataset shape: (540507, 8)\",\n  \"Binary features created: 6\",\n  \"Encoded category: 28 unique values\",\n  \"Encoded day_of_week: 7 unique values\",\n  \"Encoded month_date: 12 unique values\",\n  \"\\nSample of encoded data:\",\n  \"   category  day_of_week  month_date\\n0         3            4          11\\n1        21            1           2\\n2        12            3           5\\n3         7            1           6\\n4         8            3           9\",\n  \"\\n=== Top Merchants with Fraud ===\",\n  \"['fraud_Padberg-Welch', 'fraud_Mosciski, Ziemann and Farrell', 'fraud_Gottlieb, Considine and Schultz', 'fraud_Lockman Ltd', 'fraud_Heathcote, Yost and Kertzmann']\",\n  \"\\n=== Top Categories with Fraud ===\",\n  \"[18, 25, 11, 4, 8, 22]\",\n  \"\\n=== Top Jobs with Fraud ===\",\n  \"[]\",\n  \"\\n=== Top Hours with Fraud ===\",\n  \"[23, 22, 0, 2, 3, 1]\",\n  \"\\n=== Top Months with Fraud ===\",\n  \"[8, 7, 1, 2]\",\n  \"\\n=== Top Days with Fraud ===\",\n  \"[3, 1, 0]\",\n  \"\\n=== Top ZIP Codes with Fraud ===\",\n  \"[]\",\n  \"\\n=== Suspicious Transaction Amounts ===\",\n  \"Overall fraud rate: 0.43%\",\n  \"Amount ranges with high fraud rates:\",\n  \"  (195.74, 22768.11]: 6.56% fraud rate (27025 transactions)\",\n  \"\\n=== Engineered Features Summary ===\",\n  \"       is_top6_fraud_category  is_top10_fraud_job  is_top6_fraud_hour  is_top4_fraud_month  is_top3_fraud_day        log_amt  is_suspicious_amt    fraud_label\\ncount           540507.000000            540507.0       540507.000000        540507.000000      540507.000000  540507.000000      540507.000000  540507.000000\\nmean                 0.218980                 0.0            0.233157             0.403462           0.501081       3.525275           0.049999       0.004350\\nstd                  0.413555                 0.0            0.422842             0.490592           0.499999       1.288895           0.217944       0.065808\\nmin                  0.000000                 0.0            0.000000             0.000000           0.000000       0.693147           0.000000       0.000000\\n25%                  0.000000                 0.0            0.000000             0.000000           0.000000       2.360854           0.000000       0.000000\\n50%                  0.000000                 0.0            0.000000             0.000000           1.000000       3.871409           0.000000       0.000000\\n75%                  0.000000                 0.0            0.000000             1.000000           1.000000       4.427836           0.000000       0.000000\\nmax                  1.000000                 0.0            1.000000             1.000000           1.000000      10.033160           1.000000       1.000000\",\n  \"\\nFinal engineered dataset shape: (540507, 8)\",\n  \"Binary features created: 6\"\n]",
+        "[INFO] Total columns in dataset: 15",
+        "[INFO] Feature columns (excluding 'fraud_label'): 14",
+        "[INFO] Feature names: ['trans_date_trans_time', 'unix_time', 'merchant', 'category', 'amt', 'zip', 'city_pop', 'job', 'day_of_week', 'hour', 'minute', 'second', 'day_date', 'month_date']",
+        "\n=== Data Split Information ===",
+        "Training set: 432405 samples (80.0%)",
+        "Validation set: 54051 samples (10.0%)",
+        "Test set: 54051 samples (10.0%)",
+        "\nClass distribution in splits:",
+        "  Training: 0.44% fraud",
+        "  Validation: 0.43% fraud",
+        "  Test: 0.43% fraud",
+        "Using original training data (no SMOTE)",
+        "Training XGBoost...",
+        "Saved model: storage\\models\\model_XGB_20250502_130820.pkl",
+        "Model parameters:",
+        [
+            "objective=binary:logistic",
+            "base_score=None",
+            "booster=None",
+            "callbacks=None",
+            "colsample_bylevel=None",
+            "colsample_bynode=None",
+            "colsample_bytree=None",
+            "device=None",
+            "early_stopping_rounds=None",
+            "enable_categorical=False",
+            "eval_metric=logloss",
+            "feature_types=None",
+            "feature_weights=None",
+            "gamma=None",
+            "grow_policy=None",
+            "importance_type=None",
+            "interaction_constraints=None",
+            "learning_rate=0.1",
+            "max_bin=None",
+            "max_cat_threshold=None",
+            "max_cat_to_onehot=None",
+            "max_delta_step=None",
+            "max_depth=10",
+            "max_leaves=None",
+            "min_child_weight=None",
+            "missing=nan",
+            "monotone_constraints=None",
+            "multi_strategy=None",
+            "n_estimators=100",
+            "n_jobs=None",
+            "num_parallel_tree=None",
+            "random_state=42",
+            "reg_alpha=None",
+            "reg_lambda=None",
+            "sampling_method=None",
+            "scale_pos_weight=None",
+            "subsample=None",
+            "tree_method=None",
+            "validate_parameters=None",
+            "verbosity=None",
+            "use_label_encoder=False"
+        ],
+        "Model parameters for XGB: ['objective=binary:logistic', 'base_score=None', 'booster=None', 'callbacks=None', 'colsample_bylevel=None', 'colsample_bynode=None', 'colsample_bytree=None', 'device=None', 'early_stopping_rounds=None', 'enable_categorical=False', 'eval_metric=logloss', 'feature_types=None', 'feature_weights=None', 'gamma=None', 'grow_policy=None', 'importance_type=None', 'interaction_constraints=None', 'learning_rate=0.1', 'max_bin=None', 'max_cat_threshold=None', 'max_cat_to_onehot=None', 'max_delta_step=None', 'max_depth=10', 'max_leaves=None', 'min_child_weight=None', 'missing=nan', 'monotone_constraints=None', 'multi_strategy=None', 'n_estimators=100', 'n_jobs=None', 'num_parallel_tree=None', 'random_state=42', 'reg_alpha=None', 'reg_lambda=None', 'sampling_method=None', 'scale_pos_weight=None', 'subsample=None', 'tree_method=None', 'validate_parameters=None', 'verbosity=None', 'use_label_encoder=False']",
+        "Trained XGB model without grid search.",
+        "\n=== Applying Random Undersampling ===",
+        "\n=== Final Dataset Sizes ===",
+        "Original training set: (432405, 7)",
+        "Validation set: (54051, 7)",
+        "Test set: (54051, 7)",
+        "Saved feature transformer: storage\\models\\feature_transformer_XGB_20250502_130820.pkl",
+        "Saved latest feature transformer: storage\\models\\latest_feature_transformer.pkl",
+        "Saved latest model: storage\\models\\latest_fraud_model.pkl",
+        "Cross-validation F_7.5 scores: [0.91523376 0.91486504 0.92295809 0.92570393 0.92501625]",
+        "Mean CV F_7.5 score: 0.921",
+        "\nValidation set metrics (default threshold):",
+        "Precision: 0.062",
+        "Recall: 0.928",
+        "F_7.5 Score: 0.746",
+        "ROC AUC: 0.982",
+        "PR AUC: 0.489",
+        "\nClassification Report (Validation Set):",
+        "              precision    recall  f1-score   support\n\n         0.0       1.00      0.94      0.97     53816\n         1.0       0.06      0.93      0.12       235\n\n    accuracy                           0.94     54051\n   macro avg       0.53      0.93      0.54     54051\nweighted avg       1.00      0.94      0.96     54051\n",
+        "\nOptimal threshold for XGB: 0.965 (maximizing F_7.5 with \u226530% precision)",
+        "At this threshold - Precision: 0.305, Recall: 0.728, F_7.5: 0.710",
+        "\nClassification Report (Test Set):",
+        "              precision    recall  f1-score   support\n\n         0.0       1.00      0.94      0.97     53816\n         1.0       0.06      0.93      0.12       235\n\n    accuracy                           0.94     54051\n   macro avg       0.53      0.94      0.54     54051\nweighted avg       1.00      0.94      0.96     54051\n",
+        "\n=== Test Set Results ===",
+        "[Default Threshold]",
+        "  Precision: 0.062",
+        "  Recall:    0.932",
+        "  F_7.5 Score:  0.749",
+        "[Optimal Threshold]",
+        "  Threshold: 0.965",
+        "  Precision: 0.290",
+        "  Recall:    0.711",
+        "  F_7.5 Score:  0.693",
+        "[Overall Scores]",
+        "  ROC AUC:   0.983",
+        "  PR AUC:    0.504",
+        [
+            {
+                "name": "XGB",
+                "best_params": [
+                    "objective=binary:logistic",
+                    "base_score=None",
+                    "booster=None",
+                    "callbacks=None",
+                    "colsample_bylevel=None",
+                    "colsample_bynode=None",
+                    "colsample_bytree=None",
+                    "device=None",
+                    "early_stopping_rounds=None",
+                    "enable_categorical=False",
+                    "eval_metric=logloss",
+                    "feature_types=None",
+                    "feature_weights=None",
+                    "gamma=None",
+                    "grow_policy=None",
+                    "importance_type=None",
+                    "interaction_constraints=None",
+                    "learning_rate=0.1",
+                    "max_bin=None",
+                    "max_cat_threshold=None",
+                    "max_cat_to_onehot=None",
+                    "max_delta_step=None",
+                    "max_depth=10",
+                    "max_leaves=None",
+                    "min_child_weight=None",
+                    "missing=nan",
+                    "monotone_constraints=None",
+                    "multi_strategy=None",
+                    "n_estimators=100",
+                    "n_jobs=None",
+                    "num_parallel_tree=None",
+                    "random_state=42",
+                    "reg_alpha=None",
+                    "reg_lambda=None",
+                    "sampling_method=None",
+                    "scale_pos_weight=None",
+                    "subsample=None",
+                    "tree_method=None",
+                    "validate_parameters=None",
+                    "verbosity=None",
+                    "use_label_encoder=False"
+                ],
+                "optimal_threshold": 0.9647904634475708,
+                "validation": [
+                    {
+                        "metric": "precision",
+                        "value": 0.06209057248647109
+                    },
+                    {
+                        "metric": "recall",
+                        "value": 0.9276595744680851
+                    },
+                    {
+                        "metric": "f_7.5",
+                        "value": 0.7460063659050494
+                    },
+                    {
+                        "metric": "roc_auc",
+                        "value": 0.9820482083948774
+                    },
+                    {
+                        "metric": "pr_auc",
+                        "value": 0.4890713170352016
+                    }
+                ],
+                "test_default": [
+                    {
+                        "metric": "precision",
+                        "value": 0.062057240011334655
+                    },
+                    {
+                        "metric": "recall",
+                        "value": 0.9319148936170213
+                    },
+                    {
+                        "metric": "f_7.5",
+                        "value": 0.7486229493514054
+                    }
+                ],
+                "test_optimal": [
+                    {
+                        "metric": "precision",
+                        "value": 0.29043478260869565
+                    },
+                    {
+                        "metric": "recall",
+                        "value": 0.7106382978723405
+                    },
+                    {
+                        "metric": "f_7.5",
+                        "value": 0.6931218849116447
+                    },
+                    {
+                        "metric": "roc_auc",
+                        "value": 0.9834730001992605
+                    },
+                    {
+                        "metric": "pr_auc",
+                        "value": 0.5040258649364372
+                    }
+                ]
+            }
+        ],
+        "Model training complete."
+    ]
+}

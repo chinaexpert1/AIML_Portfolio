@@ -1,0 +1,45 @@
+Begin Postfix Converter Log at: 2023-02-24 09:09:42.506396 
+
+Prefix Input # 1: -+ABC 
+Postfix Conversion: AB+C- 
+
+Prefix Input # 2: -A+BC 
+Postfix Conversion: ABC+- 
+
+Prefix Input # 3: $+-ABC+D-EF 
+Postfix Conversion: AB-C+DEF-+$ 
+
+Prefix Input # 4: -*A$B+C-DE*EF 
+Postfix Conversion: ABCDE-+$*EF*- 
+
+Prefix Input # 5: **A+BC+C-BA 
+Postfix Conversion: ABC+*CBA-+* 
+
+Prefix Input # 6: /A+BC+C*BA 
+Postfix Conversion: ABC+/CBA*+ 
+
+Prefix Input # 7: *-*-ABC+BA 
+Postfix Conversion: Invalid syntax: *. The program is trying to pop from an empty stack. 
+
+Prefix Input # 8: /+/A-BC-BA 
+Postfix Conversion: Invalid syntax: /. The program is trying to pop from an empty stack. 
+
+Prefix Input # 9: *$A+BC+C-BA 
+Postfix Conversion: ABC+$CBA-+* 
+
+Prefix Input # 10: //A+B0-C+BA 
+Postfix Conversion: Invalid character: 0 
+
+Prefix Input # 11: *$A^BC+C-BA 
+Postfix Conversion: Invalid character: ^ 
+
+Done. 
+Runtime Report: 
+The report took 226600 nanoseconds to run 
+Total lines of prefix input: 11 
+lines with bad characters 2 
+The size of object called input is: 184 bytes 
+Total lines of output: 11 
+lines converted to postfix 7 
+The size of output is: 184 bytes 
+Done. 

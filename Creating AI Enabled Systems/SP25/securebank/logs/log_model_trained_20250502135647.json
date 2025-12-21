@@ -1,0 +1,7 @@
+{
+    "event": "model_trained",
+    "version": "RF_20250502_135647",
+    "model_type": "RF",
+    "model_file": "storage\\models\\model_RF_20250502_135647.pkl",
+    "timestamp": "20250502_135647"
+}

@@ -1,0 +1,177 @@
+<h1>README</h1>
+
+<h2>Instructions:</h2>
+<ol>
+  <li>Copy the three data files to the <code>storage/data_sources</code> folder. Copy your <code>.json</code> input file into the <code>storage/inputs</code> folder.</li>
+  <li>Run the Dockerfile; it builds the container and starts the app.</li>
+  <li>
+    Run the <code>create_dataset</code> endpoint by pointing your browser to:<br>
+    <a href="http://localhost:5000/create_dataset">http://localhost:5000/create_dataset</a><br>
+    The sampling defaults to stratified but supports random and KFold via keyword.
+  </li>
+  <li>
+    Run the <code>train_model</code> endpoint by pointing your browser to:<br>
+    <a href="http://localhost:5000/train_model">http://localhost:5000/train_model</a> (to train the default model RF)<br>
+    <a href="http://localhost:5000/train_model?model=XGB">http://localhost:5000/train_model?model=XGB</a><br>
+    <a href="http://localhost:5000/train_model?model=RF">http://localhost:5000/train_model?model=RF</a><br>
+    <a href="http://localhost:5000/train_model?model=NN">http://localhost:5000/train_model?model=NN</a> (to train a specific model)
+  </li>
+  <li>
+    Run the <code>predict</code> endpoint by pointing your browser to:<br>
+    <a href="http://localhost:5000/predict">http://localhost:5000/predict</a><br>
+    This works as a GET request because you copied over your input file.<br>
+    Or use a POST request by modifying this curl call with your file name:<br>
+    <pre><code>curl -X POST http://localhost:5000/predict \
+-H "Content-Type: application/json" \
+-d @input.json
+    </code></pre>
+    (Make sure <code>input.json</code> is in your current working directory.)
+  </li>
+  <li>View the log files in the <code>log</code> folder.</li>
+</ol>
+
+<h2>Written Report for the Prototype Including Design Choices</h2>
+
+<h3>Problem Statement</h3>
+<p>The problem at hand is to develop a containerized version of a new machine learning system for SecureBank to detect credit card fraud from a dataset of transactions with identifying information. The following functional requirements were given:</p>
+
+<h4>System Functional Requirements</h4>
+<ul>
+  <li>The system should improve on prior performance (30% precision, 60% recall)</li>
+  <li>The system should allow administrators to generate a new dataset for training from the available data sources.</li>
+  <li>The system should allow administrators to select from a catalog of pre-trained models</li>
+  <li>The system should allow administrators to audit the system's performance.</li>
+</ul>
+
+<p><strong>Non-functional requirements</strong> that would be considered in production include latency &amp; throughput, resource utilization, scalability and elasticity to loads, reliability and availability, security, maintainability and extensibility, admin and user usability and accessibility, interoperability, integration, compliance, privacy and regulatory considerations, disaster recovery and business continuity, and cost-effectiveness and resource efficiency.</p>
+
+<p>I decided to measure one aspect of all these many facets: the runtime of my code. I got the following wall times for various parts of my code:</p>
+
+<table>
+  <thead>
+    <tr><th>Code Function</th><th>Wall Time</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Data Loading</td><td>3.29 sec</td></tr>
+    <tr><td>Label Encoding</td><td>868 ms</td></tr>
+    <tr><td>EDA</td><td>38.9 sec</td></tr>
+    <tr><td>Dropping Rows and Sampling</td><td>668 ms</td></tr>
+    <tr><td>Feature Engineering</td><td>6.17 sec</td></tr>
+    <tr><td>Data Split</td><td>635 ms</td></tr>
+    <tr><td>Training, Grid Search and Results</td><td>50.2 sec</td></tr>
+  </tbody>
+</table>
+<p><em>Table 1. Elapsed time for various parts of the code in Jupyter Notebooks</em></p>
+
+<h3>Data</h3>
+<p>I was given a database in three parts, which when joined totaled over 1 million rows. The majority class and the target class were extremely unbalanced. I skipped imputation and dropped rows with missing values, since only 630 fraudulent transactions were lost versus 147,866 non-fraud rows and 164,670 rows with missing labels. This left 1,334,376 rows.</p>
+<p>I used 90% of this for training—960,751 observations—leaving 120,094 each for validation and test.</p>
+<p>If fraud labels were missing, it likely reflects a data-collection issue at SecureBank; however, fixing that was out of scope, so I proceeded by dropping rows.</p>
+
+<p>Many columns were deemed unnecessary and dropped:</p>
+<table>
+  <thead>
+    <tr><th>Column dropped</th><th>Reason</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Trans_num</td><td>This has nothing to do with fraud</td></tr>
+    <tr><td>Index_x</td><td>This is just an index</td></tr>
+    <tr><td>Index_y</td><td>This is just an index</td></tr>
+    <tr><td>Cc_num</td><td>This indicates customers</td></tr>
+    <tr><td>Unix_time</td><td>I broke the time down into its components elsewhere</td></tr>
+    <tr><td>Merch_lat</td><td>Tracking merchants by name is enough</td></tr>
+    <tr><td>Merch_long</td><td>Tracking merchants by name is enough</td></tr>
+    <tr><td>First, Last</td><td>Indicates customer identity, not fraud</td></tr>
+    <tr><td>sex</td><td>Fraud detection should be gender-agnostic</td></tr>
+    <tr><td>Street, city, zip</td><td>Location was weakly predictive in EDA</td></tr>
+    <tr><td>dob</td><td>We need to stop fraud for all ages</td></tr>
+    <tr><td>Year_date</td><td>Non-repeating feature that doesn’t generalize</td></tr>
+  </tbody>
+</table>
+
+<h3>Feature Engineering</h3>
+<p>EDA showed that the <code>merchant</code> field was uniformly distributed across fraud cases, so it was dropped:</p>
+<p><img src="README_image_folder/Picture1.png" alt="relative uniformity of frauds for all merchants"></p>
+<p><em>Fig. 1: Relative uniformity of frauds for all merchants</em></p>
+
+<p>Similarly, <code>job</code>, <code>day_of_week</code>, <code>minute</code>, and <code>second</code> were weak predictors and dropped. However, purchase <code>category</code> showed concentration in about nine categories, so I engineered a binary feature for the top categories:</p>
+<p><img src="README_image_folder/Picture2.png" alt="Fraud counts for purchase category"></p>
+<p><em>Fig. 2: Fraud counts for purchase category</em></p>
+
+<p>The log-transformed transaction <code>amt</code> had a trimodal distribution; discretizing into bins created a useful “suspicious amount” feature:</p>
+<p><img src="README_image_folder/Picture3.png" alt="Log transformation of amount column"></p>
+<p><em>Fig. 3: Log transformation of <code>amt</code></em></p>
+
+<p>After dropping unused fields, the remaining raw features were <code>trans_date_trans_time</code>, <code>day_of_week</code>, <code>day_date</code>, <code>month_date</code>, <code>hour</code>, <code>amt</code>, <code>city_pop</code>, and <code>category</code>. I then distilled these into binary flags (e.g., top-n categories, suspicious-amount bins) plus <code>log_amt</code>.</p>
+<p><img src="README_image_folder/Picture4.png" alt="Correlation of final features with the Fraud label"></p>
+<p><em>Fig. 4: Correlation of final features with the Fraud label</em></p>
+
+<h3>Models</h3>
+<p>Given mostly binary features, tree-based learners are natural choices. I tested Random Forest, XGBoost, and a vanilla Neural Network (with 0.5 dropout and batch normalization).</p>
+
+<p>My initial hyperparameter grids were:</p>
+<pre><code>xgb_param_grid = {
+  'n_estimators': [100, 150, 200, 300, 400],
+  'max_depth': [10, 15, 20, 25, 30, 50, 100],
+  'learning_rate': [0.1]
+}
+rf_param_grid = {
+  'n_estimators': [100, 200],
+  'max_depth': [None, 10, 15, 20, 30],
+  'min_samples_split': [2, 3, 5, 7, 10, 12]
+}
+nn_param_grid = {
+  'hidden_dim': [40, 50, 60, 70, 100],
+  'num_hidden_layers': [1],
+  'lr': [0.1],
+  'num_epochs': [10, 15],
+  'batch_size': [32]
+}
+</code></pre>
+
+<p>Final tuned hyperparameters:</p>
+<table>
+  <thead><tr><th>Model</th><th>Best Parameters</th></tr></thead>
+  <tbody>
+    <tr><td>XGBoost</td><td>{'learning_rate': 0.1, 'max_depth': 10, 'n_estimators': 100}</td></tr>
+    <tr><td>Random Forest</td><td>{'max_depth': 10, 'min_samples_split': 12, 'n_estimators': 200}</td></tr>
+    <tr><td>Neural Network</td><td>{'batch_size': 32, 'hidden_dim': 50, 'lr': 0.1, 'num_epochs': 10, 'num_hidden_layers': 1}</td></tr>
+  </tbody>
+</table>
+<p><em>Table 2: Best Hyperparameters after tuning</em></p>
+
+<h3>Metrics</h3>
+<p>Offline metrics focused on precision and recall, with ROC-AUC and PR-AUC as secondary measures. The optimal threshold held precision ≥ 30% while maximizing recall:</p>
+<p><img src="README_image_folder/Picture5.png" alt="PR curve XGBoost"></p>
+<p><img src="README_image_folder/Picture6.png" alt="PR curve RF"></p>
+<p><img src="README_image_folder/Picture7.png" alt="PR curve NN"></p>
+<p><em>Fig. 5–7: PR-Curves for the models (validation set)</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Model (params)</th><th>Precision</th><th>Recall</th><th>Threshold</th><th>ROC AUC</th><th>PR AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>XGBoost ({ 'lr': 0.1, 'max_depth': 10, 'n_estimators': 100 })</td><td>0.31</td><td>0.70</td><td>0.956</td><td>0.987</td><td>0.496</td></tr>
+    <tr><td>Random Forest ({ 'max_depth': 10, 'min_samples_split': 12, 'n_estimators': 200 })</td><td>0.32</td><td>0.72</td><td>0.938</td><td>0.987</td><td>0.543</td></tr>
+    <tr><td>Neural Network ({ 'batch_size': 32, 'hidden_dim': 50, 'lr': 0.1, 'num_epochs': 10, 'num_hidden_layers': 1 })</td><td>0.30</td><td>0.62</td><td>0.976</td><td>0.956</td><td>0.374</td></tr>
+  </tbody>
+</table>
+<p><em>Table 3: Training and Test set results for models</em></p>
+
+<h3>Policy Decisions</h3>
+<p>Deployment and post-deployment policies must cover secure API integration, SLAs for alert latency, environment segregation (dev/staging/prod), encrypted data transport, RBAC, immutable audit trails, model governance (back-testing, stress tests), change management, and staff training. Once live, implement real-time monitoring, drift detection, automated dashboards, feedback loops from analysts, incident response protocols, and regular compliance audits. Continually assess bias and maintain transparent grievance channels for customers. Maintain rolling cost-benefit analyses aligning technical metrics with business KPIs.</p>
+
+<h3>Conclusion</h3>
+<p>Key design decisions by section:</p>
+<ul>
+  <li><strong>Problem Statement:</strong> Benchmarked only end-to-end runtime to stay within scope.</li>
+  <li><strong>Data:</strong> Dropped rows with missing values to preserve fraud examples.</li>
+  <li><strong>Feature Engineering:</strong> Engineered binary “top-n” category flags plus log-transformed amount.</li>
+  <li><strong>Models:</strong> Chose tree-based learners (RF, XGB) plus a neural network; tuned via grid search.</li>
+  <li><strong>Metrics:</strong> Anchored selection on precision ≥30% while maximizing recall.</li>
+  <li><strong>Policy Decisions:</strong> Enforced environment segregation with version-controlled config files.</li>
+</ul>
+<p>Together, these choices formed a disciplined, focused approach to a robust fraud-detection prototype.</p>

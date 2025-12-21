@@ -1,0 +1,7 @@
+{
+    "event": "model_trained",
+    "version": "XGB_20250502_135507",
+    "model_type": "XGB",
+    "model_file": "storage\\models\\model_XGB_20250502_135507.pkl",
+    "timestamp": "20250502_135507"
+}

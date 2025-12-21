@@ -1,0 +1,255 @@
+{
+    "event": "model_trained",
+    "model_type": "NN",
+    "model_file": "storage\\models\\model_NN_20250502_134757.pkl",
+    "classification_report": {
+        "0.0": {
+            "precision": 0.9989905723264451,
+            "recall": 0.9746543778801844,
+            "f1-score": 0.9866724353608413,
+            "support": 53816.0
+        },
+        "1.0": {
+            "precision": 0.11772315653298836,
+            "recall": 0.774468085106383,
+            "f1-score": 0.20437956204379562,
+            "support": 235.0
+        },
+        "accuracy": 0.973784018797062,
+        "macro avg": {
+            "precision": 0.5583568644297167,
+            "recall": 0.8745612314932837,
+            "f1-score": 0.5955259987023185,
+            "support": 54051.0
+        },
+        "weighted avg": {
+            "precision": 0.9951590457550317,
+            "recall": 0.973784018797062,
+            "f1-score": 0.9832712249257058,
+            "support": 54051.0
+        }
+    },
+    "confusion_matrix": [
+        [
+            52452,
+            1364
+        ],
+        [
+            53,
+            182
+        ]
+    ],
+    "messages": [
+        "\n=== Dataset Information ===",
+        "DataFrame shape: (540507, 15)",
+        "\nColumn datatypes:",
+        "trans_date_trans_time     object\nunix_time                float64\nmerchant                  object\ncategory                  object\namt                      float64\nfraud_label              float64\nzip                      float64\ncity_pop                 float64\njob                       object\nday_of_week               object\nhour                       int64\nminute                     int64\nsecond                     int64\nday_date                   int64\nmonth_date                object\ndtype: object",
+        "\nSample data:",
+        "  trans_date_trans_time     unix_time                             merchant      category     amt  ...  hour  minute  second day_date month_date\n0   2019-09-19 06:55:18  1.348038e+09  fraud_Johnston, Nikolaus and Maggio   GROCERY_NET   65.70  ...     6      55      18       19  September\n1   2019-12-23 20:57:37  1.356296e+09                     fraud_Bednar PLC     kids_pets   26.10  ...    20      57      37       23   December\n2   2019-07-28 15:17:15  1.343489e+09                    fraud_Friesen Inc  SHOPPING_POS    3.92  ...    15      17      15       28       July\n3   2019-06-24 14:57:46  1.340550e+09                      fraud_Rau-Grant     KIDS_PETS   36.91  ...    14      57      46       24       June\n4   2019-11-03 13:14:43  1.351948e+09              fraud_Bogisich-Homenick      MISC_NET  184.21  ...    13      14      43        3   November\n\n[5 rows x 15 columns]",
+        "\nClass distribution:",
+        "fraud_label\n0.0    538156\n1.0      2351\nName: count, dtype: int64",
+        "Fraud percentage: 0.43%",
+        "[DEBUG] df_engineered.columns: ['is_top6_fraud_category', 'is_top10_fraud_job', 'is_top6_fraud_hour', 'is_top4_fraud_month', 'is_top3_fraud_day', 'log_amt', 'is_suspicious_amt', 'fraud_label']",
+        "[\n  \"Encoded category: 28 unique values\",\n  \"Encoded day_of_week: 7 unique values\",\n  \"Encoded month_date: 12 unique values\",\n  \"\\nSample of encoded data:\",\n  \"   category  day_of_week  month_date\\n0         3            4          11\\n1        21            1           2\\n2        12            3           5\\n3         7            1           6\\n4         8            3           9\",\n  \"\\n=== Top Merchants with Fraud ===\",\n  \"['fraud_Padberg-Welch', 'fraud_Mosciski, Ziemann and Farrell', 'fraud_Gottlieb, Considine and Schultz', 'fraud_Lockman Ltd', 'fraud_Heathcote, Yost and Kertzmann']\",\n  \"\\n=== Top Categories with Fraud ===\",\n  \"[18, 25, 11, 4, 8, 22]\",\n  \"\\n=== Top Jobs with Fraud ===\",\n  \"[]\",\n  \"\\n=== Top Hours with Fraud ===\",\n  \"[23, 22, 0, 2, 3, 1]\",\n  \"\\n=== Top Months with Fraud ===\",\n  \"[8, 7, 1, 2]\",\n  \"\\n=== Top Days with Fraud ===\",\n  \"[3, 1, 0]\",\n  \"\\n=== Top ZIP Codes with Fraud ===\",\n  \"[]\",\n  \"\\n=== Suspicious Transaction Amounts ===\",\n  \"Overall fraud rate: 0.43%\",\n  \"Amount ranges with high fraud rates:\",\n  \"  (195.74, 22768.11]: 6.56% fraud rate (27025 transactions)\",\n  \"\\n=== Engineered Features Summary ===\",\n  \"       is_top6_fraud_category  is_top10_fraud_job  is_top6_fraud_hour  is_top4_fraud_month  is_top3_fraud_day        log_amt  is_suspicious_amt    fraud_label\\ncount           540507.000000            540507.0       540507.000000        540507.000000      540507.000000  540507.000000      540507.000000  540507.000000\\nmean                 0.218980                 0.0            0.233157             0.403462           0.501081       3.525275           0.049999       0.004350\\nstd                  0.413555                 0.0            0.422842             0.490592           0.499999       1.288895           0.217944       0.065808\\nmin                  0.000000                 0.0            0.000000             0.000000           0.000000       0.693147           0.000000       0.000000\\n25%                  0.000000                 0.0            0.000000             0.000000           0.000000       2.360854           0.000000       0.000000\\n50%                  0.000000                 0.0            0.000000             0.000000           1.000000       3.871409           0.000000       0.000000\\n75%                  0.000000                 0.0            0.000000             1.000000           1.000000       4.427836           0.000000       0.000000\\nmax                  1.000000                 0.0            1.000000             1.000000           1.000000      10.033160           1.000000       1.000000\",\n  \"\\nFinal engineered dataset shape: (540507, 8)\",\n  \"Binary features created: 6\",\n  \"Encoded category: 28 unique values\",\n  \"Encoded day_of_week: 7 unique values\",\n  \"Encoded month_date: 12 unique values\",\n  \"\\nSample of encoded data:\",\n  \"   category  day_of_week  month_date\\n0         3            4          11\\n1        21            1           2\\n2        12            3           5\\n3         7            1           6\\n4         8            3           9\",\n  \"\\n=== Top Merchants with Fraud ===\",\n  \"['fraud_Padberg-Welch', 'fraud_Mosciski, Ziemann and Farrell', 'fraud_Gottlieb, Considine and Schultz', 'fraud_Lockman Ltd', 'fraud_Heathcote, Yost and Kertzmann']\",\n  \"\\n=== Top Categories with Fraud ===\",\n  \"[18, 25, 11, 4, 8, 22]\",\n  \"\\n=== Top Jobs with Fraud ===\",\n  \"[]\",\n  \"\\n=== Top Hours with Fraud ===\",\n  \"[23, 22, 0, 2, 3, 1]\",\n  \"\\n=== Top Months with Fraud ===\",\n  \"[8, 7, 1, 2]\",\n  \"\\n=== Top Days with Fraud ===\",\n  \"[3, 1, 0]\",\n  \"\\n=== Top ZIP Codes with Fraud ===\",\n  \"[]\",\n  \"\\n=== Suspicious Transaction Amounts ===\",\n  \"Overall fraud rate: 0.43%\",\n  \"Amount ranges with high fraud rates:\",\n  \"  (195.74, 22768.11]: 6.56% fraud rate (27025 transactions)\",\n  \"\\n=== Engineered Features Summary ===\",\n  \"       is_top6_fraud_category  is_top10_fraud_job  is_top6_fraud_hour  is_top4_fraud_month  is_top3_fraud_day        log_amt  is_suspicious_amt    fraud_label\\ncount           540507.000000            540507.0       540507.000000        540507.000000      540507.000000  540507.000000      540507.000000  540507.000000\\nmean                 0.218980                 0.0            0.233157             0.403462           0.501081       3.525275           0.049999       0.004350\\nstd                  0.413555                 0.0            0.422842             0.490592           0.499999       1.288895           0.217944       0.065808\\nmin                  0.000000                 0.0            0.000000             0.000000           0.000000       0.693147           0.000000       0.000000\\n25%                  0.000000                 0.0            0.000000             0.000000           0.000000       2.360854           0.000000       0.000000\\n50%                  0.000000                 0.0            0.000000             0.000000           1.000000       3.871409           0.000000       0.000000\\n75%                  0.000000                 0.0            0.000000             1.000000           1.000000       4.427836           0.000000       0.000000\\nmax                  1.000000                 0.0            1.000000             1.000000           1.000000      10.033160           1.000000       1.000000\",\n  \"\\nFinal engineered dataset shape: (540507, 8)\",\n  \"Binary features created: 6\"\n]",
+        "[INFO] Total columns in dataset: 15",
+        "[INFO] Feature columns (excluding 'fraud_label'): 14",
+        "[INFO] Feature names: ['trans_date_trans_time', 'unix_time', 'merchant', 'category', 'amt', 'zip', 'city_pop', 'job', 'day_of_week', 'hour', 'minute', 'second', 'day_date', 'month_date']",
+        "\n=== Data Split Information ===",
+        "Training set: 432405 samples (80.0%)",
+        "Validation set: 54051 samples (10.0%)",
+        "Test set: 54051 samples (10.0%)",
+        "\nClass distribution in splits:",
+        "  Training: 0.44% fraud",
+        "  Validation: 0.43% fraud",
+        "  Test: 0.43% fraud",
+        "Using original training data (no SMOTE)",
+        "Training Neural Network...",
+        "Saved PyTorch model: storage\\models\\model_NN_20250502_134757.pt",
+        "Model parameters:",
+        [
+            "batch_size=32",
+            "dropout=0.5",
+            "hidden_dim=100",
+            "input_dim=7",
+            "lr=0.1",
+            "num_epochs=10",
+            "num_hidden_layers=1",
+            "random_state=42",
+            "verbose=1"
+        ],
+        "Model parameters for NN: ['batch_size=32', 'dropout=0.5', 'hidden_dim=100', 'input_dim=7', 'lr=0.1', 'num_epochs=10', 'num_hidden_layers=1', 'random_state=42', 'verbose=1']",
+        "Trained NN model without grid search.",
+        "\n=== Applying Random Undersampling ===",
+        "\n=== Final Dataset Sizes ===",
+        "Original training set: (432405, 7)",
+        "Validation set: (54051, 7)",
+        "Test set: (54051, 7)",
+        "Epoch 1/10, Loss: 0.2866",
+        "Epoch 2/10, Loss: 0.1304",
+        "Epoch 3/10, Loss: 0.3379",
+        "Epoch 4/10, Loss: 0.3779",
+        "Epoch 5/10, Loss: 0.3630",
+        "Epoch 6/10, Loss: 0.1667",
+        "Epoch 7/10, Loss: 1.3592",
+        "Epoch 8/10, Loss: 0.2302",
+        "Epoch 9/10, Loss: 0.6936",
+        "Epoch 10/10, Loss: 0.3213",
+        "Saved feature transformer: storage\\models\\feature_transformer_NN_20250502_134757.pkl",
+        "Saved latest feature transformer: storage\\models\\latest_feature_transformer.pkl",
+        "Saved PyTorch model state dict: storage\\models\\model_NN_20250502_134757.pt",
+        "Saved latest PyTorch model state dict: storage\\models\\latest_fraud_model.pt",
+        "Epoch 1/10, Loss: 0.6342",
+        "Epoch 2/10, Loss: 0.2156",
+        "Epoch 3/10, Loss: 0.3816",
+        "Epoch 4/10, Loss: 0.2569",
+        "Epoch 5/10, Loss: 0.3083",
+        "Epoch 6/10, Loss: 0.2685",
+        "Epoch 7/10, Loss: 0.5137",
+        "Epoch 8/10, Loss: 0.2979",
+        "Epoch 9/10, Loss: 0.2304",
+        "Epoch 10/10, Loss: 0.3784",
+        "Epoch 1/10, Loss: 0.3326",
+        "Epoch 2/10, Loss: 0.3248",
+        "Epoch 3/10, Loss: 0.2895",
+        "Epoch 4/10, Loss: 0.3997",
+        "Epoch 5/10, Loss: 0.2386",
+        "Epoch 6/10, Loss: 0.2165",
+        "Epoch 7/10, Loss: 0.5923",
+        "Epoch 8/10, Loss: 0.3466",
+        "Epoch 9/10, Loss: 0.2671",
+        "Epoch 10/10, Loss: 0.4379",
+        "Epoch 1/10, Loss: 0.2994",
+        "Epoch 2/10, Loss: 0.3565",
+        "Epoch 3/10, Loss: 0.4047",
+        "Epoch 4/10, Loss: 0.3843",
+        "Epoch 5/10, Loss: 0.3762",
+        "Epoch 6/10, Loss: 0.3863",
+        "Epoch 7/10, Loss: 0.2717",
+        "Epoch 8/10, Loss: 0.1785",
+        "Epoch 9/10, Loss: 0.3341",
+        "Epoch 10/10, Loss: 0.2264",
+        "Epoch 1/10, Loss: 0.2652",
+        "Epoch 2/10, Loss: 0.1503",
+        "Epoch 3/10, Loss: 0.2580",
+        "Epoch 4/10, Loss: 0.3838",
+        "Epoch 5/10, Loss: 0.1738",
+        "Epoch 6/10, Loss: 0.1413",
+        "Epoch 7/10, Loss: 0.1726",
+        "Epoch 8/10, Loss: 0.7887",
+        "Epoch 9/10, Loss: 0.2332",
+        "Epoch 10/10, Loss: 0.2269",
+        "Epoch 1/10, Loss: 0.3638",
+        "Epoch 2/10, Loss: 0.1758",
+        "Epoch 3/10, Loss: 0.4687",
+        "Epoch 4/10, Loss: 0.3071",
+        "Epoch 5/10, Loss: 0.1894",
+        "Epoch 6/10, Loss: 0.2618",
+        "Epoch 7/10, Loss: 0.1972",
+        "Epoch 8/10, Loss: 0.3072",
+        "Epoch 9/10, Loss: 0.2242",
+        "Epoch 10/10, Loss: 0.3861",
+        "Cross-validation F_7.5 scores: [0.         0.         0.9250614  0.72808892 0.75973252]",
+        "Mean CV F_7.5 score: 0.483",
+        "\nValidation set metrics (default threshold):",
+        "Precision: 0.126",
+        "Recall: 0.783",
+        "F_7.5 Score: 0.718",
+        "ROC AUC: 0.963",
+        "PR AUC: 0.418",
+        "\nClassification Report (Validation Set):",
+        "              precision    recall  f1-score   support\n\n         0.0       1.00      0.98      0.99     53816\n         1.0       0.13      0.78      0.22       235\n\n    accuracy                           0.98     54051\n   macro avg       0.56      0.88      0.60     54051\nweighted avg       1.00      0.98      0.98     54051\n",
+        "\nOptimal threshold for NN: 0.975 (maximizing F_7.5 with \u226530% precision)",
+        "At this threshold - Precision: 0.314, Recall: 0.651, F_7.5: 0.639",
+        "\nClassification Report (Test Set):",
+        "              precision    recall  f1-score   support\n\n         0.0       1.00      0.97      0.99     53816\n         1.0       0.12      0.77      0.20       235\n\n    accuracy                           0.97     54051\n   macro avg       0.56      0.87      0.60     54051\nweighted avg       1.00      0.97      0.98     54051\n",
+        "\n=== Test Set Results ===",
+        "[Default Threshold]",
+        "  Precision: 0.118",
+        "  Recall:    0.774",
+        "  F_7.5 Score:  0.706",
+        "[Optimal Threshold]",
+        "  Threshold: 0.975",
+        "  Precision: 0.310",
+        "  Recall:    0.617",
+        "  F_7.5 Score:  0.607",
+        "[Overall Scores]",
+        "  ROC AUC:   0.968",
+        "  PR AUC:    0.357",
+        [
+            {
+                "name": "NN",
+                "best_params": [
+                    "batch_size=32",
+                    "dropout=0.5",
+                    "hidden_dim=100",
+                    "input_dim=7",
+                    "lr=0.1",
+                    "num_epochs=10",
+                    "num_hidden_layers=1",
+                    "random_state=42",
+                    "verbose=1"
+                ],
+                "optimal_threshold": 0.9753427505493164,
+                "validation": [
+                    {
+                        "metric": "precision",
+                        "value": 0.12585499316005472
+                    },
+                    {
+                        "metric": "recall",
+                        "value": 0.7829787234042553
+                    },
+                    {
+                        "metric": "f_7.5",
+                        "value": 0.7175382729084004
+                    },
+                    {
+                        "metric": "roc_auc",
+                        "value": 0.9629114097207506
+                    },
+                    {
+                        "metric": "pr_auc",
+                        "value": 0.41806764957651155
+                    }
+                ],
+                "test_default": [
+                    {
+                        "metric": "precision",
+                        "value": 0.11772315653298836
+                    },
+                    {
+                        "metric": "recall",
+                        "value": 0.774468085106383
+                    },
+                    {
+                        "metric": "f_7.5",
+                        "value": 0.7057010785824345
+                    }
+                ],
+                "test_optimal": [
+                    {
+                        "metric": "precision",
+                        "value": 0.31049250535331907
+                    },
+                    {
+                        "metric": "recall",
+                        "value": 0.6170212765957447
+                    },
+                    {
+                        "metric": "f_7.5",
+                        "value": 0.6065615695157371
+                    },
+                    {
+                        "metric": "roc_auc",
+                        "value": 0.9680903251109375
+                    },
+                    {
+                        "metric": "pr_auc",
+                        "value": 0.3570098658359412
+                    }
+                ]
+            }
+        ],
+        "Model training complete."
+    ]
+}
